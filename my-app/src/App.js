@@ -6,7 +6,8 @@ import StockPriceChart from './stockPriceChart/StockPriceChart';
 import StockSelector from './stockSelector/StockSelector';
 import Event from './event/Event';
 import Result from './result/Result';
-import Log from './log/Log'
+import Log from './log/Log';
+import Start from './start/Start';
 
 function App() {
   // 4プレイヤーの所持株式、所持金をstateを用いて管理する
@@ -25,10 +26,21 @@ function App() {
 
   const [year, setYear] = useState(1);
   const [period, setPeriod] = useState(1);
+
+  const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
   // プレイヤーの行動ログを記録
   // めんどいので任せます
+
+  // スタート画面が表示されないバグ
+  if (isStarted) {
+    return (
+      <div className="App">
+        <Start props={{ isStarted, setIsStarted }} />
+      </div>
+    )
+  }
 
   if (isFinished) {
     return (
@@ -37,6 +49,7 @@ function App() {
       </div>
     )
   }
+  
   return (
     <div className="App">
       <GameYearAndPeriod props={{ year, period, isFinished }}/>

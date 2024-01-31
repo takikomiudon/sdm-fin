@@ -6,7 +6,7 @@ const PlayerInfo = (props) => {
         <div className='PlayerInfo'>
             <img src={logo}/>
             <p>Stocks: {props.props.player.stocks}</p>
-            <p>Money: {props.props.player.money}</p>
+            <p>Money: {props.props.player.money}万円</p>
         </div>
     );
 }
