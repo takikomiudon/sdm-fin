@@ -1,0 +1,4 @@
+.StockSelectButton {
+    display: flex;
+    flex-direction: column;
+}

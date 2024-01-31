@@ -1,0 +1,9 @@
+.PlayerInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.PlayerInfo img {
+    height: 48px;
+}

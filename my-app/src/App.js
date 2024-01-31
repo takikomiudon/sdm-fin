@@ -1,23 +1,50 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import GameYearAndPeriod from './gameYearAndPeriod/GameYearAndPeriod';
+import PlayerInfoList from './playerInfo/PlayerInfoList';
+import StockPriceChart from './stockPriceChart/StockPriceChart';
+import StockSelector from './stockSelector/StockSelector';
+import Event from './event/Event';
+import Result from './result/Result';
+import Log from './log/Log'
 
 function App() {
+  // 4プレイヤーの所持株式、所持金をstateを用いて管理する
+  const initialPlayerState = {
+    stocks: [0, 0, 0, 0, 0],
+    money: 1000
+  }
+  const [player1, setPlayer1] = useState(initialPlayerState);
+  const [player2, setPlayer2] = useState(initialPlayerState);
+  const [player3, setPlayer3] = useState(initialPlayerState);
+  const [player4, setPlayer4] = useState(initialPlayerState);
+
+  // 5種類の株式の買値のindexをstateを用いて管理する
+  const initialStockPriceState = [5, 5, 5, 5, 5];
+  const [stockPrices, setStockPrices] = useState(initialStockPriceState);
+
+  const [year, setYear] = useState(1);
+  const [period, setPeriod] = useState(1);
+  const [isFinished, setIsFinished] = useState(false);
+
+  // プレイヤーの行動ログを記録
+  // めんどいので任せます
+
+  if (isFinished) {
+    return (
+      <div className="App">
+        <Result props={{ isFinished, year, player1, player2, player3, player4 }} />
+      </div>
+    )
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GameYearAndPeriod props={{ year, period, isFinished }}/>
+      <PlayerInfoList props={{ player1, player2, player3, player4 }}/>
+      <Log />
+      <StockPriceChart props={ stockPrices }/>
+      <Event />
+      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished }} />
     </div>
   );
 }
