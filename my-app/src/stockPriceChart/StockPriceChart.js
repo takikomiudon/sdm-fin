@@ -1,7 +1,7 @@
 const StockPriceChart = () => {
     return (
         <div>
-        <h1>Stock Price Chart</h1>
+        <h1>現在の株価</h1>
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from '@mui/material';
 import './StockSelector.css';
 import StockSelectButton from './StockSelectButton';
 
@@ -20,7 +21,8 @@ const StockSelector = (props) => {
                 <StockSelectButton stock={stock3} setStock={setStock3} stockId={3}/>
                 <StockSelectButton stock={stock4} setStock={setStock4} stockId={4}/>
             </div>
-            <button onClick={() => {
+            <Button variant="contained" sx = {{marginTop: '16px'}}
+            onClick={() => {
                 // 株を売買する処理を記述する
 
                 if (props.props.year === 4 && props.props.period === 4) {
@@ -32,7 +34,7 @@ const StockSelector = (props) => {
                     props.props.setPeriod(props.props.period + 1);
                 }
             }
-            } className='button'>決定</button>
+            } className='button'>決定</Button>
         </div>
     );
 }
