@@ -21,7 +21,7 @@ const StockSelector = (props) => {
                 <StockSelectButton stock={stock3} setStock={setStock3} stockId={3}/>
                 <StockSelectButton stock={stock4} setStock={setStock4} stockId={4}/>
             </div>
-            <Button variant="contained" sx = {{marginTop: '16px'}}
+            <Button variant="contained" sx = {{margin: '16px'}}
             onClick={() => {
                 // 株を売買する処理を記述する
 

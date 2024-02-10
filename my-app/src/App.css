@@ -2,7 +2,6 @@
   text-align: center;
   background-color: #282c34;
   color: white;
-  min-height: 100vh;
 }
 
 .App-logo {
@@ -38,4 +37,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.mainDisplay {
+  display: flex;
+  flex-direction: row;
 }

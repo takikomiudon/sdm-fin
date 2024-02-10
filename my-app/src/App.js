@@ -55,8 +55,10 @@ function App() {
       <GameYearAndPeriod props={{ year, period, isFinished }}/>
       <PlayerInfoList props={{ player1, player2, player3, player4 }}/>
       <Log />
-      <StockPriceChart props={ stockPrices }/>
-      <Event />
+      <div className='mainDisplay'>
+        <StockPriceChart props={ stockPrices }/>
+        <Event />
+      </div>
       <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished }} />
     </div>
   );
