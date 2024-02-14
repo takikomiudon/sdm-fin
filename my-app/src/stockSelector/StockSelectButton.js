@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
 const StockSelectButton = ({ stock, setStock, stockId }) => {
+    
     return (
         <div className='StockSelectButton'>
             <span>Stock {stockId}</span>
