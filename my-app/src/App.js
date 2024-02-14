@@ -10,6 +10,7 @@ import Log from './log/Log';
 import Start from './start/Start';
 
 function App() {
+  // 瀧花です
   // 4プレイヤーの所持株式、所持金をstateを用いて管理する
   const initialPlayerState = {
     stocks: [0, 0, 0, 0, 0],
