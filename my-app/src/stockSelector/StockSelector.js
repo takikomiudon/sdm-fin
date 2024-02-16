@@ -12,6 +12,38 @@ const StockSelector = (props) => {
     const [stock3, setStock3] = useState(0);
     const [stock4, setStock4] = useState(0);
 
+    const handleClick = () => {
+        validateTrade()
+        trade()
+        initialTrade()
+        event()
+
+        if (props.props.year === 4 && props.props.period === 4) {
+            props.props.setIsFinished(true);
+        } else if (props.props.period === 4) {
+            props.props.setYear(props.props.year + 1);
+            props.props.setPeriod(1);
+        } else {
+            props.props.setPeriod(props.props.period + 1);
+        }
+    }
+
+    const validateTrade = () => {
+        // 売買数が不正である場合処理を中断 吉岡くん
+    }
+
+    const initialTrade = () => {
+        // 売買数の初期化(0, 0, 0, 0, 0) 吉岡くん
+    }
+
+    const trade = () => {
+        // 売買プロセス(所持金、持ち株、株価の更新)を記述　前田くん
+    }
+
+    const event = () => {
+        // イベントの内容に応じて株価などを変化させる 丸山くん
+    }
+
     return (
         <div className='StockSelector'>
             <div className='StockSelectButtons'>
@@ -21,20 +53,10 @@ const StockSelector = (props) => {
                 <StockSelectButton stock={stock3} setStock={setStock3} stockId={3}/>
                 <StockSelectButton stock={stock4} setStock={setStock4} stockId={4}/>
             </div>
+            {/* ここに売買数が不正である際のメッセージを書く isValidというbooleanの変数を定義して、不正の時falseにすることで表示非表示を管理する 吉岡くん */}
             <Button variant="contained" sx = {{margin: '16px'}}
-            onClick={() => {
-                // 株を売買する処理を記述する
-
-                if (props.props.year === 4 && props.props.period === 4) {
-                    props.props.setIsFinished(true);
-                } else if (props.props.period === 4) {
-                    props.props.setYear(props.props.year + 1);
-                    props.props.setPeriod(1);
-                } else {
-                    props.props.setPeriod(props.props.period + 1);
-                }
-            }
-            } className='button'>決定</Button>
+            onClick={handleClick} 
+            className='button'>決定</Button>
         </div>
     );
 }

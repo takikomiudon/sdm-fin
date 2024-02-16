@@ -1,6 +1,9 @@
 import { BarChart } from '@mui/x-charts/BarChart';
 
 const StockPriceChart = () => {
+    // 下向くん
+    // まずグラフの描画に必要な情報を取得し、グラフに反映するようにする
+    // 現状はMUIのBarChartというものを用いて無理やり描画しているが、これだと上にいくにつれて上がり幅が増えるのが表現できていないため、他に良さそうなライブラリあるいは表現方法があれば教えてください
     return (
         <div>
             <h1>現在の株価</h1>
