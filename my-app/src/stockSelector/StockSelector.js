@@ -36,8 +36,92 @@ const StockSelector = (props) => {
         // 売買数の初期化(0, 0, 0, 0, 0) 吉岡くん
     }
 
+    //　株価の配列　(前田が勝手に作りました)
+    const priceArrey = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 
+                        100, 120, 140, 160, 180, 200, 240, 280, 330, 390, 460];
+
     const trade = () => {
         // 売買プロセス(所持金、持ち株、株価の更新)を記述　前田くん
+        // player1からplayer4まで繰り返す
+        for (let p = 1; p < 5; p++){
+
+            // 現在のプレイヤーの状態を取得
+            const currentPlayer = props.props[`player${p}`];
+            const updatePlayer = props.props[`setPlayer${p}`];
+
+            //売却プロセス
+            for (let i = 0; i < 5; i++){
+
+                // stock"i"の売却数を取得(未完)
+                const numSelling = ;
+
+                // stock"i"の現在の売価のindexを取得
+                const sellingPrice = priceArrey[props.props.stockPrices[i] - 1];
+
+                // 所持金をプラスし、持ち株数をマイナスする
+                const updatedMoney = currentPlayer.money + numSelling * sellingPrice;
+                const updatedStocks = currentPlayer.stocks[i] - numSelling;
+
+                // 株価を下げる(下限より下にはいかない)
+                const updatedPrice = props.props.stockPrices[i] - numSelling >= 1 ? props.props.stockPrices[i] - numSelling : 1;
+
+                // プレイヤーの所持金と持ち株数を更新
+                updatePlayer({
+                    ...currentPlayer,
+                    money: updatedMoney,
+                    stocks: updatedStocks
+                });
+
+                // 株価を更新
+                props.props.setStockPrices(updatedPrice)
+
+                // ヒストリーを更新
+                props.props.addActionLog(props.props.year, props.props.period, `player${p}`, `stock${i}`, sellingPrice, -numSelling);
+
+            }
+
+
+            //購入プロセス
+            for (let i = 0; i < 5; i++){
+                
+                // stock"i"の希望購入数を取得(未完)
+                const numBuyingDesired = ;
+
+                // stock"i"の現在の買価のindexを取得
+                const buyingPrice = priceArrey[props.props.stockPrices[i]];
+
+                // 現在の所持金で買える最大の株数を計算
+                const maxAffordable = Math.floor(currentPlayer.money / buyingPrice);
+
+                // stock"i"の購入数を決定(希望購入数買えない場合は、買える分だけ)
+                const numBuying = numBuyingDesired <= maxAffordable ? numBuyingDesired : maxAffordable;
+                
+                // 所持金をマイナスし、持ち株数をプラスする
+                const updatedMoney = currentPlayer.money - numBuying * buyingPrice;
+                const updatedStocks = currentPlayer.stocks[i] + numBuying;
+
+                // 株価を上げる(上限より上にはいかない)
+                const updatedPrice = props.props.stockPrices[i] + numBuying <= 20 ? props.props.stockPrices[i] + numBuying : 20;
+
+                // プレイヤーの所持金と持ち株数を更新
+                updatePlayer({
+                    ...currentPlayer,
+                    money: updatedMoney,
+                    stocks: updatedStocks
+                });
+
+                // 株価を更新
+                props.props.setStockPrices(updatedPrice)
+
+                // ヒストリーを更新
+                props.props.addActionLog(props.props.year, props.props.period, `player${p}`, `stock${i}`, buyingPrice, numBuying);
+
+
+            }
+
+
+
+        }
     }
 
     const event = () => {

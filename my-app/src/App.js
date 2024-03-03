@@ -34,6 +34,24 @@ function App() {
 
   // プレイヤーの行動ログを記録
   // めんどいので任せます
+  // 行動ログを保存するためのstate(前田が勝手に作りました。適宜修正してください。)
+  const [actionLogs, setActionLogs] = useState([]);
+
+  // 行動ログを追加する関数
+  const addActionLog = (year, period, playerName, stockType, price, quantity) => {
+    const newLogEntry = {
+      year,
+      period,
+      playerName,
+      stockType,
+      price,
+      quantity
+    };
+    setActionLogs([...actionLogs, newLogEntry]);
+  };
+
+
+
 
   // スタート画面が表示されないバグ
   if (isStarted) {
