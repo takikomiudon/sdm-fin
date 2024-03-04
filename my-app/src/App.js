@@ -31,6 +31,8 @@ function App() {
   const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
+  // イベントをここに定義する(一旦5つ、株価が変動するやつ　内容はスプレッドシート参照) 丸山くん
+
   // プレイヤーの行動ログを記録
   // めんどいので任せます
 
