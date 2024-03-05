@@ -18,13 +18,13 @@ const StockSelector = (props) => {
         initialTrade()
         event()
 
-        if (props.props.year === 4 && props.props.period === 4) {
-            props.props.setIsFinished(true);
-        } else if (props.props.period === 4) {
-            props.props.setYear(props.props.year + 1);
-            props.props.setPeriod(1);
+        if (props.year === 4 && props.period === 4) {
+            props.setIsFinished(true);
+        } else if (props.period === 4) {
+            props.setYear(props.year + 1);
+            props.setPeriod(1);
         } else {
-            props.props.setPeriod(props.props.period + 1);
+            props.setPeriod(props.period + 1);
         }
     }
 

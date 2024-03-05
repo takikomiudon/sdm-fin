@@ -1,4 +1,4 @@
-const Result = ({ props }) => {
+const Result = (props) => {
     if (props.isFinished) {
         return (
             <div>

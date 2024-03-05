@@ -39,7 +39,7 @@ function App() {
   if (isStarted) {
     return (
       <div className="App">
-        <Start props={{ isStarted, setIsStarted }} />
+        <Start isStarted={isStarted} setIsStarted={setIsStarted} />
       </div>
     )
   }
@@ -47,21 +47,21 @@ function App() {
   if (isFinished) {
     return (
       <div className="App">
-        <Result props={{ isFinished, year, player1, player2, player3, player4 }} />
+        <Result isFinished={isFinished} year={year} player1={player1} player2={player2} player3={player3} player4={player4} />
       </div>
     )
   }
   
   return (
     <div className="App">
-      <GameYearAndPeriod props={{ year, period, isFinished }}/>
-      <PlayerInfoList props={{ player1, player2, player3, player4 }}/>
+      <GameYearAndPeriod year={year} period={period} isFinished={isFinished}/>
+      <PlayerInfoList player1={player1} player2={player2} player3={player3} player4={player4} />
       <Log />
       <div className='mainDisplay'>
-        <StockPriceChart props={ stockPrices }/>
+        <StockPriceChart stockPrices={stockPrices} />
         <Event />
       </div>
-      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished }} />
+      <StockSelector player1={player1} player2={player2} player3={player3} player4={player4} stockPrices={stockPrices} setPlayer1={setPlayer1} setPlayer2={setPlayer2} setPlayer3={setPlayer3} setPlayer4={setPlayer4} setStockPrices={setStockPrices} year={year} setYear={setYear} period={period} setPeriod={setPeriod} isFinished={isFinished} setIsFinished={setIsFinished} />
     </div>
   );
 }
