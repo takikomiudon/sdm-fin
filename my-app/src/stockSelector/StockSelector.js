@@ -30,10 +30,23 @@ const StockSelector = (props) => {
 
     const validateTrade = () => {
         // 売買数が不正である場合処理を中断 吉岡くん
+        const sum=0;
+        sum = stock0*setStock0+ stock1*setStock1 + stock2*setStock2 + stock3 * setStock3 + stock4*setStock4
+        if(props.props.player.money < sum){
+            setStock0(0);
+            setStock1(0);
+            setStock2(0);
+            setStock3(0);
+            setStock4(0);
+        }
     }
 
     const initialTrade = () => {
-        // 売買数の初期化(0, 0, 0, 0, 0) 吉岡くん
+        setStock0(0);
+        setStock1(0);
+        setStock2(0);
+        setStock3(0);
+        setStock4(0);
     }
 
     const trade = () => {
