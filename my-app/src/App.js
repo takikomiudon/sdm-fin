@@ -31,16 +31,15 @@ function App() {
   const [isFinished, setIsFinished] = useState(false);
 
   // イベントをここに定義する(一旦5つ、株価が変動するやつ　内容はスプレッドシート参照) 丸山くん
-    const アベノミクス = [0, 2, 1, 0, 3];//スプシ4行目
-    const 金融緩和 = [0, 1, 0, 1, 2];//スプシ9行目
-    const リーマンショック = [0, -3, 0, -1, -2];//スプシ14行目
-    const 長期金利の上昇 = [0, 3, 0, 0, 0];//スプシ19行目
-    const D社赤字を発表 = [0, 0, 0, -3, 0];//スプシ24行目
+    const abenomikusu = [0, 2, 1, 0, 3];//スプシ4行目
+    const kinyuukanwa = [0, 1, 0, 1, 2];//スプシ9行目
+    const lehmanShock = [0, -3, 0, -1, -2];//スプシ14行目
+    const choukikinrinojousyou = [0, 3, 0, 0, 0];//スプシ19行目
+    const dnoakaji = [0, 0, 0, -3, 0];//スプシ24行目
 
-    const eventArray = [アベノミクス, 金融緩和, リーマンショック, 長期金利の上昇, D社赤字を発表];
-    const [eventNum, setEventNum] = useState(0);//eventArrayの何番目を表示するか
-
-    //ここまで(丸山)
+    const eventArray = [abenomikusu, kinyuukanwa, lehmanShock, choukikinrinojousyou, dnoakaji];
+    const eventNameArray = ["アベノミクス", "金融緩和", "リーマンショック", "長期金利の上昇", "D社赤字を発表"];
+    const [eventNum, setEventNum] = useState(0);//eventNameArrayの何番目を表示するか
 
   // プレイヤーの行動ログを記録
   // めんどいので任せます
@@ -69,9 +68,9 @@ function App() {
       <Log />
       <div className='mainDisplay'>
         <StockPriceChart props={ stockPrices }/>
-        <Event />
+        <Event props={{ eventNum, setEventNum, eventNameArray, eventArray, isFinished }}/>
       </div>
-      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished }} />
+      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished, eventNum, setEventNum, eventArray }} />
     </div>
   );
 }

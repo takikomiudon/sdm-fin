@@ -27,13 +27,11 @@ const StockSelector = (props) => {
             props.props.setPeriod(props.props.period + 1);
         }
 
-        //イベント表示の切り替え(丸山)
         if (props.props.eventNum <=3){
-            props.props.setEventNum(props.props.eventnum + 1);
+            props.props.setEventNum(props.props.eventNum + 1);
         }else {
             props.props.setEventNum(0);
         }
-        //ここまで(丸山)
     }
 
     
@@ -49,19 +47,20 @@ const StockSelector = (props) => {
     const trade = () => {
         // 売買プロセス(所持金、持ち株、株価の更新)を記述　前田くん
     }
-        //イベントによる株価変動(丸山)
+
     const event = () => {
+        const newPrices = [0, 0, 0, 0, 0];
         for (let i = 0; i < 5; i++){
-            if (0 <= (props.props.stockPrices[i] + (props.props.eventArray[props.props.eventNum])[i]) <= 20){
-               props.props.SetStockPrices[i](props.props.stockPrices[i] + (props.props.eventArray[props.props.eventNum])[i]);
-        } else if (0 > props.props.stockPrices[i] + (props.props.eventArray[props.props.eventNum])[i]){
-               props.props.SetStockPrices[i](0);
+            if (0 <= ((props.props.stockPrices[i]) + ((props.props.eventArray[props.props.eventNum])[i])) <= 20){
+               newPrices[i] = (props.props.stockPrices[i]) + ((props.props.eventArray[props.props.eventNum])[i]);
+        } else if (0 > (props.props.stockPrices[i] + (props.props.eventArray[props.props.eventNum])[i])){
+               newPrices[i] = 0;
         } else {
-               props.props.setStockPrices[i](20);     
+               newPrices[i] = 20;     
         }
-        }    
+        }
+        props.props.setStockPrices(newPrices);    
     }
-    //ここまで(丸山)
 
     return (
         <div className='StockSelector'>
