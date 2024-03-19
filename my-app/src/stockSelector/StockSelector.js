@@ -52,8 +52,26 @@ const StockSelector = (props) => {
             //売却プロセス
             for (let i = 0; i < 5; i++){
 
-                // stock"i"の売却数を取得(未完)
-                const numSelling = ;
+
+                
+                // stock"i"の売却数を取得して更新
+                let stocki = 0
+                let setStocki = setStock0
+                let numSelling = 0;
+
+                switch(i) {
+                case 0: stocki = stock0; setStocki = setStock0; break;
+                case 1: stocki = stock1; setStocki = setStock1; break;
+                case 2: stocki = stock2; setStocki = setStock2; break;
+                case 3: stocki = stock3; setStocki = setStock3; break;
+                case 4: stocki = stock4; setStocki = setStock4; break;
+                }
+                    
+                if(stocki < 0){
+                    numSelling = - stocki;  // numSellingに stock"i" の値を代入
+                    setStocki(0);           // stock"i" を0に更新
+                }
+
 
                 // stock"i"の現在の売価のindexを取得
                 const sellingPrice = priceArrey[props.props.stockPrices[i] - 1];
@@ -84,8 +102,24 @@ const StockSelector = (props) => {
             //購入プロセス
             for (let i = 0; i < 5; i++){
                 
-                // stock"i"の希望購入数を取得(未完)
-                const numBuyingDesired = ;
+                // stock"i"の希望購入数を取得
+                let stocki = 0
+                let setStocki = setStock0
+                let numBuyingDesired = 0;
+
+                switch(i) {
+                    case 0: stocki = stock0; setStocki = setStock0; break;
+                    case 1: stocki = stock1; setStocki = setStock1; break;
+                    case 2: stocki = stock2; setStocki = setStock2; break;
+                    case 3: stocki = stock3; setStocki = setStock3; break;
+                    case 4: stocki = stock4; setStocki = setStock4; break;
+                }
+
+                if(stocki > 0){
+                    numBuyingDesired = stocki;  // numBuyingDesiredに stock"i" の値を代入
+                    setStocki(0);           // stock"i" を0に更新
+                }
+                
 
                 // stock"i"の現在の買価のindexを取得
                 const buyingPrice = priceArrey[props.props.stockPrices[i]];
