@@ -27,11 +27,9 @@ const StockSelector = (props) => {
             props.props.setPeriod(props.props.period + 1);
         }
 
-        if (props.props.eventNum <=3){
-            props.props.setEventNum(props.props.eventNum + 1);
-        }else {
-            props.props.setEventNum(0);
-        }
+        
+        props.props.setEventNum(props.props.eventNum + 1);
+        
     }
 
     

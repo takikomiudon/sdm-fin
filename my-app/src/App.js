@@ -31,14 +31,26 @@ function App() {
   const [isFinished, setIsFinished] = useState(false);
 
   // イベントをここに定義する(一旦5つ、株価が変動するやつ　内容はスプレッドシート参照) 丸山くん
-    const abenomikusu = [0, 2, 1, 0, 3];//スプシ4行目
-    const kinyuukanwa = [0, 1, 0, 1, 2];//スプシ9行目
-    const lehmanShock = [0, -3, 0, -1, -2];//スプシ14行目
-    const choukikinrinojousyou = [0, 3, 0, 0, 0];//スプシ19行目
-    const dnoakaji = [0, 0, 0, -3, 0];//スプシ24行目
+    const choukikinriUp = [0, 3, 0, 0, 0];
+    const itBabble = [0, 1, 0, 0, 3];
+    const oilPriceUp = [-1, 0, 0, 1, 0];
+    const dAkaji = [0, 0, 0, -3, 0];
+    const kinyuukanwa = [0, 1, 0, 1, 2];
+    const tokyoOlympics = [0, 2, 2, 1, 2];
+    const coronaShock = [-1, -1, 0, -2, -1];
+    const fukeiki = [0, -1, -1, -1, -2];
+    const cKoutyou = [0, 0, 3, 0, 0];
+    const aAccident = [-3, 0, 0, 0, 0];
+    const koukeiki = [0, 3, 1, 0, 2];
+    const aShinseihin = [3, 0, 0, 0, 0];
+    const lehmanShock = [0, -3, 0, -1, -2];
+    const oilPriceDown = [1, 0, 0, -1, 0];
+    const babble = [0, 2, 1, 0, 3];
+    const souriJinin = [1, 1, 1, 1, 2];
 
-    const eventArray = [abenomikusu, kinyuukanwa, lehmanShock, choukikinrinojousyou, dnoakaji];
-    const eventNameArray = ["アベノミクス", "金融緩和", "リーマンショック", "長期金利の上昇", "D社赤字を発表"];
+
+    const eventArray = [choukikinriUp, itBabble, oilPriceUp, dAkaji, kinyuukanwa, tokyoOlympics, coronaShock, fukeiki, cKoutyou, aAccident, koukeiki, aShinseihin, lehmanShock, oilPriceDown, babble, souriJinin];
+    const eventNameArray = ["長期金利の上昇", "ITバブル", "原油高", "D社赤字を発表", "金融緩和", "東京オリンピック", "コロナショック", "不景気", "C社商品の大ヒット", "A社倉庫で火災", "好景気", "A社新製品発表", "リーマンショック", "原油安", "バブル経済", "総理大臣辞任"];
     const [eventNum, setEventNum] = useState(0);//eventNameArrayの何番目を表示するか
 
   // プレイヤーの行動ログを記録
