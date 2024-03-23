@@ -13,7 +13,9 @@ const StockSelector = (props) => {
     const [stock4, setStock4] = useState(0);
 
     const handleClick = () => {
-        validateTrade()
+        if(!validateTrade) {
+            return;
+        }
         trade()
         initialTrade()
         event()
@@ -31,13 +33,14 @@ const StockSelector = (props) => {
     const validateTrade = () => {
         // 売買数が不正である場合処理を中断 吉岡くん
         let sum=0;
-        sum = 1*setStock0+ 1*setStock1 + 1*setStock2 + 1 * setStock3 + 1*setStock4
+        sum = props.props.stockPrices[0]*setStock0+ props.props.stockPrices[1]*setStock1 
+        + props.props.stockPrices[2]*setStock2 + props.props.stockPrices[3] * setStock3 
+        + props.props.stockPrices[4]*setStock4;
+
         if(props.props.player.money < sum){
-            setStock0(0);
-            setStock1(0);
-            setStock2(0);
-            setStock3(0);
+            return false;
         }
+        else return true;
     }
 
     const initialTrade = () => {
