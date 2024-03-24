@@ -11,9 +11,11 @@ const StockSelector = (props) => {
     const [stock2, setStock2] = useState(0);
     const [stock3, setStock3] = useState(0);
     const [stock4, setStock4] = useState(0);
+    const [message, setMessage] = useState("");
 
     const handleClick = () => {
-        if(!validateTrade) {
+        if(!validateTrade()) {
+            setMessage("所持金が足りません");
             return;
         }
         trade()
@@ -31,13 +33,14 @@ const StockSelector = (props) => {
     }
 
     const validateTrade = () => {
-        // 売買数が不正である場合処理を中断 吉岡くん
-        let sum=0;
-        sum = props.props.stockPrices[0]*setStock0+ props.props.stockPrices[1]*setStock1 
-        + props.props.stockPrices[2]*setStock2 + props.props.stockPrices[3] * setStock3 
-        + props.props.stockPrices[4]*setStock4;
+        let sum = 
+            props.props.stockPrices[0] * stock0 + 
+            props.props.stockPrices[1] * stock1 + 
+            props.props.stockPrices[2] * stock2 + 
+            props.props.stockPrices[3] * stock3 + 
+            props.props.stockPrices[4] * stock4;
 
-        if(props.props.player.money < sum){
+        if(props.props.player1.money < sum){
             return false;
         }
         else return true;
@@ -68,7 +71,7 @@ const StockSelector = (props) => {
                 <StockSelectButton stock={stock3} setStock={setStock3} stockId={3}/>
                 <StockSelectButton stock={stock4} setStock={setStock4} stockId={4}/>
             </div>
-            {/* ここに売買数が不正である際のメッセージを書く isValidというbooleanの変数を定義して、不正の時falseにすることで表示非表示を管理する 吉岡くん */}
+            <div className='message'>{message}</div>
             <Button variant="contained" sx = {{margin: '16px'}}
             onClick={handleClick} 
             className='button'>決定</Button>
