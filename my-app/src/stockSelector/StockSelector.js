@@ -30,7 +30,13 @@ const StockSelector = (props) => {
         } else {
             props.props.setPeriod(props.props.period + 1);
         }
+
+        
+        props.props.setEventNum(props.props.eventNum + 1);
+        
     }
+
+    
 
     const validateTrade = () => {
         let sum = 
@@ -59,7 +65,17 @@ const StockSelector = (props) => {
     }
 
     const event = () => {
-        // イベントの内容に応じて株価などを変化させる 丸山くん
+        const newPrices = [0, 0, 0, 0, 0];
+        for (let i = 0; i < 5; i++){
+            if (0 <= ((props.props.stockPrices[i]) + ((props.props.eventArray[props.props.eventNum])[i])) <= 20){
+               newPrices[i] = (props.props.stockPrices[i]) + ((props.props.eventArray[props.props.eventNum])[i]);
+        } else if (0 > (props.props.stockPrices[i] + (props.props.eventArray[props.props.eventNum])[i])){
+               newPrices[i] = 0;
+        } else {
+               newPrices[i] = 20;     
+        }
+        }
+        props.props.setStockPrices(newPrices);    
     }
 
     return (

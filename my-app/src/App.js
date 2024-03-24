@@ -30,7 +30,60 @@ function App() {
   const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
-  // イベントをここに定義する(一旦5つ、株価が変動するやつ　内容はスプレッドシート参照) 丸山くん
+  const longTermInterestRateRise = [0, 3, 0, 0, 0];
+  const itBabble = [0, 1, 0, 0, 3];
+  const highCrudeOilPrice = [-1, 0, 0, 1, 0];
+  const dCompanyDeficitAnnouncement = [0, 0, 0, -3, 0];
+  const monetaryEasing = [0, 1, 0, 1, 2];
+  const tokyoOlympics = [0, 2, 2, 1, 2];
+  const coronaShock = [-1, -1, 0, -2, -1];
+  const recession = [0, -1, -1, -1, -2];
+  const cCompanyProductHit = [0, 0, 3, 0, 0];
+  const aCompanyWarehouseFire = [-3, 0, 0, 0, 0];
+  const economicBoom = [0, 3, 1, 0, 2];
+  const aCompanyNewProductAnnouncement = [3, 0, 0, 0, 0];
+  const lehmanShock = [0, -3, 0, -1, -2];
+  const lowCrudeOilPrice = [1, 0, 0, -1, 0];
+  const bubbleEconomy = [0, 2, 1, 0, 3];
+  const primeMinisterResignation = [1, 1, 1, 1, 2];
+
+  const eventArray = [
+    longTermInterestRateRise,
+    itBabble,
+    highCrudeOilPrice,
+    dCompanyDeficitAnnouncement,
+    monetaryEasing,
+    tokyoOlympics,
+    coronaShock,
+    recession,
+    cCompanyProductHit,
+    aCompanyWarehouseFire,
+    economicBoom,
+    aCompanyNewProductAnnouncement,
+    lehmanShock,
+    lowCrudeOilPrice,
+    bubbleEconomy,
+    primeMinisterResignation,
+  ];
+  const eventNameArray = [
+    "長期金利の上昇",
+    "ITバブル",
+    "原油高",
+    "D社赤字を発表",
+    "金融緩和",
+    "東京オリンピック",
+    "コロナショック",
+    "不景気",
+    "C社商品の大ヒット",
+    "A社倉庫で火災",
+    "好景気",
+    "A社新製品発表",
+    "リーマンショック",
+    "原油安",
+    "バブル経済",
+    "総理大臣辞任",
+  ];
+    const [eventNum, setEventNum] = useState(0);//eventNameArrayの何番目を表示するか
 
   // プレイヤーの行動ログを記録
   // めんどいので任せます
@@ -59,9 +112,9 @@ function App() {
       <Log />
       <div className='mainDisplay'>
         <StockPriceChart props={ stockPrices }/>
-        <Event />
+        <Event props={{ eventNum, setEventNum, eventNameArray, eventArray, isFinished }}/>
       </div>
-      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished }} />
+      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished, eventNum, setEventNum, eventArray }} />
     </div>
   );
 }
