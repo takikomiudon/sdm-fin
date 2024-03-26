@@ -32,26 +32,20 @@ function App() {
 
   // イベントをここに定義する(一旦5つ、株価が変動するやつ　内容はスプレッドシート参照) 丸山くん
 
-  // プレイヤーの行動ログを記録
-  // めんどいので任せます
-  // 行動ログを保存するためのstate(前田が勝手に作りました。適宜修正してください。)
   const [actionLogs, setActionLogs] = useState([]);
 
-  // 行動ログを追加する関数
-  const addActionLog = (year, period, playerName, stockType, price, quantity) => {
-    const newLogEntry = {
+  const addActionLog = (year, period, playerName, stockType, isBuy, price, quantity) => {
+    const newLogEntry = [
       year,
       period,
       playerName,
       stockType,
+      isBuy,
       price,
       quantity
-    };
+    ];
     setActionLogs([...actionLogs, newLogEntry]);
   };
-
-
-
 
   // スタート画面が表示されないバグ
   if (isStarted) {
@@ -74,12 +68,12 @@ function App() {
     <div className="App">
       <GameYearAndPeriod props={{ year, period, isFinished }}/>
       <PlayerInfoList props={{ player1, player2, player3, player4 }}/>
-      <Log />
+      <Log props={{ actionLogs }}/>
       <div className='mainDisplay'>
         <StockPriceChart props={ stockPrices }/>
         <Event />
       </div>
-      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished }} />
+      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished, addActionLog }} />
     </div>
   );
 }

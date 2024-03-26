@@ -41,120 +41,57 @@ const StockSelector = (props) => {
                         100, 120, 140, 160, 180, 200, 240, 280, 330, 390, 460];
 
     const trade = () => {
-        // 売買プロセス(所持金、持ち株、株価の更新)を記述　前田くん
-        // player1からplayer4まで繰り返す
         for (let p = 1; p < 5; p++){
+            const player = props.props[`player${p}`];
+            const setPlayer = props.props[`setPlayer${p}`];
 
-            // 現在のプレイヤーの状態を取得
-            const currentPlayer = props.props[`player${p}`];
-            const updatePlayer = props.props[`setPlayer${p}`];
-
-            //売却プロセス
-            for (let i = 0; i < 5; i++){
-
-
-                
-                // stock"i"の売却数を取得して更新
-                let stocki = 0
-                let setStocki = setStock0
-                let numSelling = 0;
+            for (let i = 0; i < 5; i++) {
+                let stock = 0
 
                 switch(i) {
-                case 0: stocki = stock0; setStocki = setStock0; break;
-                case 1: stocki = stock1; setStocki = setStock1; break;
-                case 2: stocki = stock2; setStocki = setStock2; break;
-                case 3: stocki = stock3; setStocki = setStock3; break;
-                case 4: stocki = stock4; setStocki = setStock4; break;
-                }
-                    
-                if(stocki < 0){
-                    numSelling = - stocki;  // numSellingに stock"i" の値を代入
-                    setStocki(0);           // stock"i" を0に更新
+                case 0: stock = stock0; break;
+                case 1: stock = stock1; break;
+                case 2: stock = stock2; break;
+                case 3: stock = stock3; break;
+                case 4: stock = stock4; break;
+                default: break;
                 }
 
+                if (stock === 0) {
+                    continue;
+                }
 
-                // stock"i"の現在の売価のindexを取得
-                const sellingPrice = priceArrey[props.props.stockPrices[i] - 1];
+                const isBuy = stock > 0;
+                stock = isBuy ? stock : -stock;
 
-                // 所持金をプラスし、持ち株数をマイナスする
-                const updatedMoney = currentPlayer.money + numSelling * sellingPrice;
-                const updatedStocks = currentPlayer.stocks[i] - numSelling;
+                const dealingPrice = priceArrey[props.props.stockPrices[i] - !isBuy];
 
-                // 株価を下げる(下限より下にはいかない)
-                const updatedPrice = props.props.stockPrices[i] - numSelling >= 1 ? props.props.stockPrices[i] - numSelling : 1;
+                const updatedMoney = player.money + stock * dealingPrice;
+                const updatedStocks = isBuy ? player.stocks[i] + stock : player.stocks[i] - stock;
 
-                // プレイヤーの所持金と持ち株数を更新
-                updatePlayer({
-                    ...currentPlayer,
-                    money: updatedMoney,
-                    stocks: updatedStocks
+                const updatedPrice = props.props.stockPrices[i] + (isBuy ? 1 : -1);
+
+                setPlayer({
+                    stocks: [
+                        ...player.stocks.slice(0, i),
+                        updatedStocks,
+                        ...player.stocks.slice(i + 1)
+                    ],
+                    money: updatedMoney
                 });
 
-                // 株価を更新
-                props.props.setStockPrices(updatedPrice)
+                console.log(props.props.stockPrices)
 
-                // ヒストリーを更新
-                props.props.addActionLog(props.props.year, props.props.period, `player${p}`, `stock${i}`, sellingPrice, -numSelling);
+                props.props.setStockPrices([
+                    ...props.props.stockPrices.slice(0, i),
+                    updatedPrice,
+                    ...props.props.stockPrices.slice(i + 1)
+                ]);
 
+                console.log(props.props.stockPrices)
+                
+                props.props.addActionLog(props.props.year, props.props.period, `player1`, `stock${i}`, isBuy, dealingPrice, stock);
             }
-
-
-            //購入プロセス
-            for (let i = 0; i < 5; i++){
-                
-                // stock"i"の希望購入数を取得
-                let stocki = 0
-                let setStocki = setStock0
-                let numBuyingDesired = 0;
-
-                switch(i) {
-                    case 0: stocki = stock0; setStocki = setStock0; break;
-                    case 1: stocki = stock1; setStocki = setStock1; break;
-                    case 2: stocki = stock2; setStocki = setStock2; break;
-                    case 3: stocki = stock3; setStocki = setStock3; break;
-                    case 4: stocki = stock4; setStocki = setStock4; break;
-                }
-
-                if(stocki > 0){
-                    numBuyingDesired = stocki;  // numBuyingDesiredに stock"i" の値を代入
-                    setStocki(0);           // stock"i" を0に更新
-                }
-                
-
-                // stock"i"の現在の買価のindexを取得
-                const buyingPrice = priceArrey[props.props.stockPrices[i]];
-
-                // 現在の所持金で買える最大の株数を計算
-                const maxAffordable = Math.floor(currentPlayer.money / buyingPrice);
-
-                // stock"i"の購入数を決定(希望購入数買えない場合は、買える分だけ)
-                const numBuying = numBuyingDesired <= maxAffordable ? numBuyingDesired : maxAffordable;
-                
-                // 所持金をマイナスし、持ち株数をプラスする
-                const updatedMoney = currentPlayer.money - numBuying * buyingPrice;
-                const updatedStocks = currentPlayer.stocks[i] + numBuying;
-
-                // 株価を上げる(上限より上にはいかない)
-                const updatedPrice = props.props.stockPrices[i] + numBuying <= 20 ? props.props.stockPrices[i] + numBuying : 20;
-
-                // プレイヤーの所持金と持ち株数を更新
-                updatePlayer({
-                    ...currentPlayer,
-                    money: updatedMoney,
-                    stocks: updatedStocks
-                });
-
-                // 株価を更新
-                props.props.setStockPrices(updatedPrice)
-
-                // ヒストリーを更新
-                props.props.addActionLog(props.props.year, props.props.period, `player${p}`, `stock${i}`, buyingPrice, numBuying);
-
-
-            }
-
-
-
         }
     }
 
