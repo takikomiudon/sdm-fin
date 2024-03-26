@@ -11,9 +11,13 @@ const StockSelector = (props) => {
     const [stock2, setStock2] = useState(0);
     const [stock3, setStock3] = useState(0);
     const [stock4, setStock4] = useState(0);
+    const [message, setMessage] = useState("");
 
     const handleClick = () => {
-        validateTrade()
+        if(!validateTrade()) {
+            setMessage("所持金が足りません");
+            return;
+        }
         trade()
         initialTrade()
         event()
@@ -26,14 +30,34 @@ const StockSelector = (props) => {
         } else {
             props.props.setPeriod(props.props.period + 1);
         }
+
+        
+        props.props.setEventNum(props.props.eventNum + 1);
+        
     }
 
+    
+
     const validateTrade = () => {
-        // 売買数が不正である場合処理を中断 吉岡くん
+        let sum = 
+            props.props.stockPrices[0] * stock0 + 
+            props.props.stockPrices[1] * stock1 + 
+            props.props.stockPrices[2] * stock2 + 
+            props.props.stockPrices[3] * stock3 + 
+            props.props.stockPrices[4] * stock4;
+
+        if(props.props.player1.money < sum){
+            return false;
+        }
+        else return true;
     }
 
     const initialTrade = () => {
-        // 売買数の初期化(0, 0, 0, 0, 0) 吉岡くん
+        setStock0(0);
+        setStock1(0);
+        setStock2(0);
+        setStock3(0);
+        setStock4(0);
     }
 
     //　株価の配列　(前田が勝手に作りました)
@@ -96,7 +120,17 @@ const StockSelector = (props) => {
     }
 
     const event = () => {
-        // イベントの内容に応じて株価などを変化させる 丸山くん
+        const newPrices = [0, 0, 0, 0, 0];
+        for (let i = 0; i < 5; i++){
+            if (0 <= ((props.props.stockPrices[i]) + ((props.props.eventArray[props.props.eventNum])[i])) <= 20){
+               newPrices[i] = (props.props.stockPrices[i]) + ((props.props.eventArray[props.props.eventNum])[i]);
+        } else if (0 > (props.props.stockPrices[i] + (props.props.eventArray[props.props.eventNum])[i])){
+               newPrices[i] = 0;
+        } else {
+               newPrices[i] = 20;     
+        }
+        }
+        props.props.setStockPrices(newPrices);    
     }
 
     return (
@@ -108,7 +142,7 @@ const StockSelector = (props) => {
                 <StockSelectButton stock={stock3} setStock={setStock3} stockId={3}/>
                 <StockSelectButton stock={stock4} setStock={setStock4} stockId={4}/>
             </div>
-            {/* ここに売買数が不正である際のメッセージを書く isValidというbooleanの変数を定義して、不正の時falseにすることで表示非表示を管理する 吉岡くん */}
+            <div className='message'>{message}</div>
             <Button variant="contained" sx = {{margin: '16px'}}
             onClick={handleClick} 
             className='button'>決定</Button>
