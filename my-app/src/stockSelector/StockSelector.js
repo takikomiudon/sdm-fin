@@ -60,8 +60,63 @@ const StockSelector = (props) => {
         setStock4(0);
     }
 
+    //　株価の配列　(前田が勝手に作りました)
+    const priceArrey = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 
+                        100, 120, 140, 160, 180, 200, 240, 280, 330, 390, 460];
+
     const trade = () => {
-        // 売買プロセス(所持金、持ち株、株価の更新)を記述　前田くん
+        for (let p = 1; p < 5; p++){
+            const player = props.props[`player${p}`];
+            const setPlayer = props.props[`setPlayer${p}`];
+
+            for (let i = 0; i < 5; i++) {
+                let stock = 0
+
+                switch(i) {
+                case 0: stock = stock0; break;
+                case 1: stock = stock1; break;
+                case 2: stock = stock2; break;
+                case 3: stock = stock3; break;
+                case 4: stock = stock4; break;
+                default: break;
+                }
+
+                if (stock === 0) {
+                    continue;
+                }
+
+                const isBuy = stock > 0;
+                stock = isBuy ? stock : -stock;
+
+                const dealingPrice = priceArrey[props.props.stockPrices[i] - !isBuy];
+
+                const updatedMoney = player.money + stock * dealingPrice;
+                const updatedStocks = isBuy ? player.stocks[i] + stock : player.stocks[i] - stock;
+
+                const updatedPrice = props.props.stockPrices[i] + (isBuy ? 1 : -1);
+
+                setPlayer({
+                    stocks: [
+                        ...player.stocks.slice(0, i),
+                        updatedStocks,
+                        ...player.stocks.slice(i + 1)
+                    ],
+                    money: updatedMoney
+                });
+
+                console.log(props.props.stockPrices)
+
+                props.props.setStockPrices([
+                    ...props.props.stockPrices.slice(0, i),
+                    updatedPrice,
+                    ...props.props.stockPrices.slice(i + 1)
+                ]);
+
+                console.log(props.props.stockPrices)
+                
+                props.props.addActionLog(props.props.year, props.props.period, `player1`, `stock${i}`, isBuy, dealingPrice, stock);
+            }
+        }
     }
 
     const event = () => {

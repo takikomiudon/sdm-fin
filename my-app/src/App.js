@@ -85,8 +85,20 @@ function App() {
   ];
     const [eventNum, setEventNum] = useState(0);//eventNameArrayの何番目を表示するか
 
-  // プレイヤーの行動ログを記録
-  // めんどいので任せます
+  const [actionLogs, setActionLogs] = useState([]);
+
+  const addActionLog = (year, period, playerName, stockType, isBuy, price, quantity) => {
+    const newLogEntry = [
+      year,
+      period,
+      playerName,
+      stockType,
+      isBuy,
+      price,
+      quantity
+    ];
+    setActionLogs([...actionLogs, newLogEntry]);
+  };
 
   // スタート画面が表示されないバグ
   if (isStarted) {
@@ -109,12 +121,12 @@ function App() {
     <div className="App">
       <GameYearAndPeriod props={{ year, period, isFinished }}/>
       <PlayerInfoList props={{ player1, player2, player3, player4 }}/>
-      <Log />
+      <Log props={{ actionLogs }}/>
       <div className='mainDisplay'>
         <StockPriceChart props={ stockPrices }/>
         <Event props={{ eventNum, setEventNum, eventNameArray, eventArray, isFinished }}/>
       </div>
-      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished, eventNum, setEventNum, eventArray }} />
+      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished, addActionLog, eventNum, setEventNum, eventArray }} />
     </div>
   );
 }
