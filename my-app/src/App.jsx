@@ -10,7 +10,6 @@ import Log from "./log/Log";
 import Start from "./start/Start";
 
 function App() {
-  // 4プレイヤーの所持株式、所持金をstateを用いて管理する
   const initialPlayerState = {
     stocks: [0, 0, 0, 0, 0],
     money: 1000,
@@ -20,7 +19,6 @@ function App() {
   const [player3, setPlayer3] = useState(initialPlayerState);
   const [player4, setPlayer4] = useState(initialPlayerState);
 
-  // 5種類の株式の買値のindexをstateを用いて管理する
   const initialStockPriceState = [5, 5, 5, 5, 5];
   const [stockPrices, setStockPrices] = useState(initialStockPriceState);
 
@@ -65,6 +63,7 @@ function App() {
     bubbleEconomy,
     primeMinisterResignation,
   ];
+  
   const eventNameArray = [
     "長期金利の上昇",
     "ITバブル",
@@ -83,7 +82,8 @@ function App() {
     "バブル経済",
     "総理大臣辞任",
   ];
-  const [eventNum, setEventNum] = useState(0); //eventNameArrayの何番目を表示するか
+
+  const [eventNum, setEventNum] = useState(0);
 
   const [actionLogs, setActionLogs] = useState([]);
 

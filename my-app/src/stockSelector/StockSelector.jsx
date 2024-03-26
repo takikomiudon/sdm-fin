@@ -4,8 +4,6 @@ import "./StockSelector.css";
 import StockSelectButton from "./StockSelectButton";
 
 const StockSelector = (props) => {
-  // 5種類の株式について、売買する個数をボタンを用いて入力する
-  // 買う場合は正の数、売る場合は負の数を入力する
   const [stock0, setStock0] = useState(0);
   const [stock1, setStock1] = useState(0);
   const [stock2, setStock2] = useState(0);
@@ -55,7 +53,6 @@ const StockSelector = (props) => {
     setStock4(0);
   };
 
-  //　株価の配列　(前田が勝手に作りました)
   const priceArrey = [
     0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180, 200, 240,
     280, 330, 390, 460,
