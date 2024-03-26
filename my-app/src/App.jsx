@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import './App.css';
-import GameYearAndPeriod from './gameYearAndPeriod/GameYearAndPeriod';
-import PlayerInfoList from './playerInfo/PlayerInfoList';
-import StockPriceChart from './stockPriceChart/StockPriceChart';
-import StockSelector from './stockSelector/StockSelector';
-import Event from './event/Event';
-import Result from './result/Result';
-import Log from './log/Log';
-import Start from './start/Start';
+import React, { useState } from "react";
+import "./App.css";
+import GameYearAndPeriod from "./gameYearAndPeriod/GameYearAndPeriod";
+import PlayerInfoList from "./playerInfo/PlayerInfoList";
+import StockPriceChart from "./stockPriceChart/StockPriceChart";
+import StockSelector from "./stockSelector/StockSelector";
+import Event from "./event/Event";
+import Result from "./result/Result";
+import Log from "./log/Log";
+import Start from "./start/Start";
 
 function App() {
   // 4プレイヤーの所持株式、所持金をstateを用いて管理する
   const initialPlayerState = {
     stocks: [0, 0, 0, 0, 0],
-    money: 1000
-  }
+    money: 1000,
+  };
   const [player1, setPlayer1] = useState(initialPlayerState);
   const [player2, setPlayer2] = useState(initialPlayerState);
   const [player3, setPlayer3] = useState(initialPlayerState);
@@ -83,11 +83,19 @@ function App() {
     "バブル経済",
     "総理大臣辞任",
   ];
-    const [eventNum, setEventNum] = useState(0);//eventNameArrayの何番目を表示するか
+  const [eventNum, setEventNum] = useState(0); //eventNameArrayの何番目を表示するか
 
   const [actionLogs, setActionLogs] = useState([]);
 
-  const addActionLog = (year, period, playerName, stockType, isBuy, price, quantity) => {
+  const addActionLog = (
+    year,
+    period,
+    playerName,
+    stockType,
+    isBuy,
+    price,
+    quantity
+  ) => {
     const newLogEntry = [
       year,
       period,
@@ -95,7 +103,7 @@ function App() {
       stockType,
       isBuy,
       price,
-      quantity
+      quantity,
     ];
     setActionLogs([...actionLogs, newLogEntry]);
   };
@@ -106,27 +114,60 @@ function App() {
       <div className="App">
         <Start props={{ isStarted, setIsStarted }} />
       </div>
-    )
+    );
   }
 
   if (isFinished) {
     return (
       <div className="App">
-        <Result props={{ isFinished, year, player1, player2, player3, player4 }} />
+        <Result
+          props={{ isFinished, year, player1, player2, player3, player4 }}
+        />
       </div>
-    )
+    );
   }
-  
+
   return (
     <div className="App">
-      <GameYearAndPeriod props={{ year, period, isFinished }}/>
-      <PlayerInfoList props={{ player1, player2, player3, player4 }}/>
-      <Log props={{ actionLogs }}/>
-      <div className='mainDisplay'>
-        <StockPriceChart props={ stockPrices }/>
-        <Event props={{ eventNum, setEventNum, eventNameArray, eventArray, isFinished }}/>
+      <GameYearAndPeriod props={{ year, period, isFinished }} />
+      <PlayerInfoList props={{ player1, player2, player3, player4 }} />
+      <Log props={{ actionLogs }} />
+      <div className="mainDisplay">
+        <StockPriceChart props={stockPrices} />
+        <Event
+          props={{
+            eventNum,
+            setEventNum,
+            eventNameArray,
+            eventArray,
+            isFinished,
+          }}
+        />
       </div>
-      <StockSelector props={{ player1, player2, player3, player4, stockPrices, setPlayer1, setPlayer2, setPlayer3, setPlayer4, setStockPrices, year, setYear, period, setPeriod, isFinished, setIsFinished, addActionLog, eventNum, setEventNum, eventArray }} />
+      <StockSelector
+        props={{
+          player1,
+          player2,
+          player3,
+          player4,
+          stockPrices,
+          setPlayer1,
+          setPlayer2,
+          setPlayer3,
+          setPlayer4,
+          setStockPrices,
+          year,
+          setYear,
+          period,
+          setPeriod,
+          isFinished,
+          setIsFinished,
+          addActionLog,
+          eventNum,
+          setEventNum,
+          eventArray,
+        }}
+      />
     </div>
   );
 }
