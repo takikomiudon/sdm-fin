@@ -129,6 +129,7 @@ function App() {
 
   return (
     <div className="App">
+      <StockPriceChart stockPrices={stockPrices} />
       <GameYearAndPeriod year={year} period={period} isFinished={isFinished} />
       <PlayerInfoList
         player1={player1}
@@ -137,16 +138,13 @@ function App() {
         player4={player4}
       />
       <Log actionLogs={actionLogs} />
-      <div className="mainDisplay">
-        <StockPriceChart stockPrices={stockPrices} />
-        <Event
-          eventNum={eventNum}
-          setEventNum={setEventNum}
-          eventNameArray={eventNameArray}
-          eventArray={eventArray}
-          isFinished={isFinished}
-        />
-      </div>
+      <Event
+        eventNum={eventNum}
+        setEventNum={setEventNum}
+        eventNameArray={eventNameArray}
+        eventArray={eventArray}
+        isFinished={isFinished}
+      />
       <StockSelector
         player1={player1}
         player2={player2}
