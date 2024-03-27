@@ -20,27 +20,27 @@ const StockSelector = (props) => {
     initialTrade();
     event();
 
-    if (props.props.year === 4 && props.props.period === 4) {
-      props.props.setIsFinished(true);
-    } else if (props.props.period === 4) {
-      props.props.setYear(props.props.year + 1);
-      props.props.setPeriod(1);
+    if (props.year === 4 && props.period === 4) {
+      props.setIsFinished(true);
+    } else if (props.period === 4) {
+      props.setYear(props.year + 1);
+      props.setPeriod(1);
     } else {
-      props.props.setPeriod(props.props.period + 1);
+      props.setPeriod(props.period + 1);
     }
 
-    props.props.setEventNum(props.props.eventNum + 1);
+    props.setEventNum(props.eventNum + 1);
   };
 
   const validateTrade = () => {
     let sum =
-      props.props.stockPrices[0] * stock0 +
-      props.props.stockPrices[1] * stock1 +
-      props.props.stockPrices[2] * stock2 +
-      props.props.stockPrices[3] * stock3 +
-      props.props.stockPrices[4] * stock4;
+      props.stockPrices[0] * stock0 +
+      props.stockPrices[1] * stock1 +
+      props.stockPrices[2] * stock2 +
+      props.stockPrices[3] * stock3 +
+      props.stockPrices[4] * stock4;
 
-    if (props.props.player1.money < sum) {
+    if (props.player1.money < sum) {
       return false;
     } else return true;
   };
@@ -60,8 +60,8 @@ const StockSelector = (props) => {
 
   const trade = () => {
     for (let p = 1; p < 5; p++) {
-      const player = props.props[`player${p}`];
-      const setPlayer = props.props[`setPlayer${p}`];
+      const player = props[`player${p}`];
+      const setPlayer = props[`setPlayer${p}`];
 
       for (let i = 0; i < 5; i++) {
         let stock = 0;
@@ -93,14 +93,14 @@ const StockSelector = (props) => {
         const isBuy = stock > 0;
         stock = isBuy ? stock : -stock;
 
-        const dealingPrice = priceArrey[props.props.stockPrices[i] - !isBuy];
+        const dealingPrice = priceArrey[props.stockPrices[i] - !isBuy];
 
         const updatedMoney = player.money + stock * dealingPrice;
         const updatedStocks = isBuy
           ? player.stocks[i] + stock
           : player.stocks[i] - stock;
 
-        const updatedPrice = props.props.stockPrices[i] + (isBuy ? 1 : -1);
+        const updatedPrice = props.stockPrices[i] + (isBuy ? 1 : -1);
 
         setPlayer({
           stocks: [
@@ -111,19 +111,19 @@ const StockSelector = (props) => {
           money: updatedMoney,
         });
 
-        console.log(props.props.stockPrices);
+        console.log(props.stockPrices);
 
-        props.props.setStockPrices([
-          ...props.props.stockPrices.slice(0, i),
+        props.setStockPrices([
+          ...props.stockPrices.slice(0, i),
           updatedPrice,
-          ...props.props.stockPrices.slice(i + 1),
+          ...props.stockPrices.slice(i + 1),
         ]);
 
-        console.log(props.props.stockPrices);
+        console.log(props.stockPrices);
 
-        props.props.addActionLog(
-          props.props.year,
-          props.props.period,
+        props.addActionLog(
+          props.year,
+          props.period,
           `player1`,
           `stock${i}`,
           isBuy,
@@ -139,24 +139,21 @@ const StockSelector = (props) => {
     for (let i = 0; i < 5; i++) {
       if (
         0 <=
-        props.props.stockPrices[i] +
-          props.props.eventArray[props.props.eventNum][i] <=
+        props.stockPrices[i] + props.eventArray[props.eventNum][i] <=
         20
       ) {
         newPrices[i] =
-          props.props.stockPrices[i] +
-          props.props.eventArray[props.props.eventNum][i];
+          props.stockPrices[i] + props.eventArray[props.eventNum][i];
       } else if (
         0 >
-        props.props.stockPrices[i] +
-          props.props.eventArray[props.props.eventNum][i]
+        props.stockPrices[i] + props.eventArray[props.eventNum][i]
       ) {
         newPrices[i] = 0;
       } else {
         newPrices[i] = 20;
       }
     }
-    props.props.setStockPrices(newPrices);
+    props.setStockPrices(newPrices);
   };
 
   return (

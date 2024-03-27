@@ -63,7 +63,7 @@ function App() {
     bubbleEconomy,
     primeMinisterResignation,
   ];
-  
+
   const eventNameArray = [
     "長期金利の上昇",
     "ITバブル",
@@ -129,44 +129,45 @@ function App() {
 
   return (
     <div className="App">
-      <GameYearAndPeriod props={{ year, period, isFinished }} />
-      <PlayerInfoList props={{ player1, player2, player3, player4 }} />
-      <Log props={{ actionLogs }} />
+      <GameYearAndPeriod year={year} period={period} isFinished={isFinished} />
+      <PlayerInfoList
+        player1={player1}
+        player2={player2}
+        player3={player3}
+        player4={player4}
+      />
+      <Log actionLogs={actionLogs} />
       <div className="mainDisplay">
-        <StockPriceChart props={stockPrices} />
+        <StockPriceChart stockPrices={stockPrices} />
         <Event
-          props={{
-            eventNum,
-            setEventNum,
-            eventNameArray,
-            eventArray,
-            isFinished,
-          }}
+          eventNum={eventNum}
+          setEventNum={setEventNum}
+          eventNameArray={eventNameArray}
+          eventArray={eventArray}
+          isFinished={isFinished}
         />
       </div>
       <StockSelector
-        props={{
-          player1,
-          player2,
-          player3,
-          player4,
-          stockPrices,
-          setPlayer1,
-          setPlayer2,
-          setPlayer3,
-          setPlayer4,
-          setStockPrices,
-          year,
-          setYear,
-          period,
-          setPeriod,
-          isFinished,
-          setIsFinished,
-          addActionLog,
-          eventNum,
-          setEventNum,
-          eventArray,
-        }}
+        player1={player1}
+        player2={player2}
+        player3={player3}
+        player4={player4}
+        stockPrices={stockPrices}
+        setPlayer1={setPlayer1}
+        setPlayer2={setPlayer2}
+        setPlayer3={setPlayer3}
+        setPlayer4={setPlayer4}
+        setStockPrices={setStockPrices}
+        year={year}
+        setYear={setYear}
+        period={period}
+        setPeriod={setPeriod}
+        isFinished={isFinished}
+        setIsFinished={setIsFinished}
+        addActionLog={addActionLog}
+        eventNum={eventNum}
+        setEventNum={setEventNum}
+        eventArray={eventArray}
       />
     </div>
   );

@@ -15,7 +15,7 @@ const Log = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.props.actionLogs.map((log, index) => {
+          {props.actionLogs.map((log, index) => {
             if (log.length === 0) {
               return null;
             }
