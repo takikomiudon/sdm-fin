@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./App.css";
 import GameYearAndPeriod from "./gameYearAndPeriod/GameYearAndPeriod";
 import PlayerInfoList from "./playerInfo/PlayerInfoList";
 import StockPriceChart from "./stockPriceChart/StockPriceChart";
@@ -128,45 +127,47 @@ function App() {
   }
 
   return (
-    <div className="text-center bg-gray-800 text-white">
+    <div className="text-center bg-gray-800 text-white flex flex-row ">
       <StockPriceChart stockPrices={stockPrices} />
-      <GameYearAndPeriod year={year} period={period} isFinished={isFinished} />
-      <PlayerInfoList
-        player1={player1}
-        player2={player2}
-        player3={player3}
-        player4={player4}
-      />
-      <Log actionLogs={actionLogs} />
-      <Event
-        eventNum={eventNum}
-        setEventNum={setEventNum}
-        eventNameArray={eventNameArray}
-        eventArray={eventArray}
-        isFinished={isFinished}
-      />
-      <StockSelector
-        player1={player1}
-        player2={player2}
-        player3={player3}
-        player4={player4}
-        stockPrices={stockPrices}
-        setPlayer1={setPlayer1}
-        setPlayer2={setPlayer2}
-        setPlayer3={setPlayer3}
-        setPlayer4={setPlayer4}
-        setStockPrices={setStockPrices}
-        year={year}
-        setYear={setYear}
-        period={period}
-        setPeriod={setPeriod}
-        isFinished={isFinished}
-        setIsFinished={setIsFinished}
-        addActionLog={addActionLog}
-        eventNum={eventNum}
-        setEventNum={setEventNum}
-        eventArray={eventArray}
-      />
+      <div>
+        <GameYearAndPeriod year={year} period={period} isFinished={isFinished} />
+        <PlayerInfoList
+          player1={player1}
+          player2={player2}
+          player3={player3}
+          player4={player4}
+        />
+        <Event
+          eventNum={eventNum}
+          setEventNum={setEventNum}
+          eventNameArray={eventNameArray}
+          eventArray={eventArray}
+          isFinished={isFinished}
+        />
+        <StockSelector
+          player1={player1}
+          player2={player2}
+          player3={player3}
+          player4={player4}
+          stockPrices={stockPrices}
+          setPlayer1={setPlayer1}
+          setPlayer2={setPlayer2}
+          setPlayer3={setPlayer3}
+          setPlayer4={setPlayer4}
+          setStockPrices={setStockPrices}
+          year={year}
+          setYear={setYear}
+          period={period}
+          setPeriod={setPeriod}
+          isFinished={isFinished}
+          setIsFinished={setIsFinished}
+          addActionLog={addActionLog}
+          eventNum={eventNum}
+          setEventNum={setEventNum}
+          eventArray={eventArray}
+        />
+        <Log actionLogs={actionLogs} />
+      </div>
     </div>
   );
 }

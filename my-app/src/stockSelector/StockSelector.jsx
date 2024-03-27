@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
-import "./StockSelector.css";
 import StockSelectButton from "./StockSelectButton";
 
 const StockSelector = (props) => {
@@ -158,7 +157,7 @@ const StockSelector = (props) => {
 
   return (
     <div className="StockSelector">
-      <div className="StockSelectButtons">
+      <div className="flex flex-row justify-evenly">
         <StockSelectButton stock={stock0} setStock={setStock0} stockId={0} />
         <StockSelectButton stock={stock1} setStock={setStock1} stockId={1} />
         <StockSelectButton stock={stock2} setStock={setStock2} stockId={2} />
