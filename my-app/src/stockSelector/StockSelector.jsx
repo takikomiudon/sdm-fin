@@ -52,9 +52,9 @@ const StockSelector = (props) => {
     setStock4(0);
   };
 
-  const priceArrey = [
-    0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180, 200, 240,
-    280, 330, 390, 460,
+  const priceArray = [
+    460, 390, 330, 280, 240, 200, 180, 160, 140, 120, 100, 90, 80, 70, 60, 50,
+    40, 30, 20, 10, 0,
   ];
 
   const trade = () => {
@@ -92,14 +92,14 @@ const StockSelector = (props) => {
         const isBuy = stock > 0;
         stock = isBuy ? stock : -stock;
 
-        const dealingPrice = priceArrey[props.stockPrices[i] - !isBuy];
+        const dealingPrice = priceArray[props.stockPrices[i] + !isBuy];
 
         const updatedMoney = player.money + stock * dealingPrice;
         const updatedStocks = isBuy
           ? player.stocks[i] + stock
           : player.stocks[i] - stock;
 
-        const updatedPrice = props.stockPrices[i] + (isBuy ? 1 : -1);
+        const updatedPrice = props.stockPrices[i] + (isBuy ? -1 : 1);
 
         setPlayer({
           stocks: [
@@ -110,15 +110,11 @@ const StockSelector = (props) => {
           money: updatedMoney,
         });
 
-        console.log(props.stockPrices);
-
         props.setStockPrices([
           ...props.stockPrices.slice(0, i),
           updatedPrice,
           ...props.stockPrices.slice(i + 1),
         ]);
-
-        console.log(props.stockPrices);
 
         props.addActionLog(
           props.year,
@@ -136,20 +132,16 @@ const StockSelector = (props) => {
   const event = () => {
     const newPrices = [0, 0, 0, 0, 0];
     for (let i = 0; i < 5; i++) {
-      if (
-        0 <=
-        props.stockPrices[i] + props.eventArray[props.eventNum][i] <=
-        20
-      ) {
-        newPrices[i] =
-          props.stockPrices[i] + props.eventArray[props.eventNum][i];
-      } else if (
-        0 >
-        props.stockPrices[i] + props.eventArray[props.eventNum][i]
-      ) {
+      if (props.stockPrices[i] - props.eventArray[props.eventNum][i] < 0) {
         newPrices[i] = 0;
+      } else if (
+        props.stockPrices[i] - props.eventArray[props.eventNum][i] >
+        19
+      ) {
+        newPrices[i] = 19;
       } else {
-        newPrices[i] = 20;
+        newPrices[i] =
+          props.stockPrices[i] - props.eventArray[props.eventNum][i];
       }
     }
     props.setStockPrices(newPrices);

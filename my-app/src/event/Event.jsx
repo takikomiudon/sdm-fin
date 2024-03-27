@@ -1,7 +1,7 @@
 const Event = (props) => {
   return (
     <div>
-      <h4 style={{ margin: 0 }}>イベント名</h4>
+      <h4 style={{ margin: 0 }}>イベント</h4>
       <h2 style={{ margin: 0 }}>{props.eventNameArray[props.eventNum]}</h2>
       <h4 style={{ margin: 0 }}>
         A{props.eventArray[props.eventNum][0]}

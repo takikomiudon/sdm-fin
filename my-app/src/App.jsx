@@ -18,7 +18,7 @@ function App() {
   const [player3, setPlayer3] = useState(initialPlayerState);
   const [player4, setPlayer4] = useState(initialPlayerState);
 
-  const initialStockPriceState = [5, 5, 5, 5, 5];
+  const initialStockPriceState = [15, 15, 15, 15, 15];
   const [stockPrices, setStockPrices] = useState(initialStockPriceState);
 
   const [year, setYear] = useState(1);
@@ -129,8 +129,12 @@ function App() {
   return (
     <div className="text-center bg-gray-800 text-white flex flex-row ">
       <StockPriceChart stockPrices={stockPrices} />
-      <div>
-        <GameYearAndPeriod year={year} period={period} isFinished={isFinished} />
+      <div className="flex flex-col justify-evenly">
+        <GameYearAndPeriod
+          year={year}
+          period={period}
+          isFinished={isFinished}
+        />
         <PlayerInfoList
           player1={player1}
           player2={player2}
