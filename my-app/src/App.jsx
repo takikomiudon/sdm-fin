@@ -170,8 +170,8 @@ function App() {
           setEventNum={setEventNum}
           eventArray={eventArray}
         />
-        <Log actionLogs={actionLogs} />
       </div>
+      <Log actionLogs={actionLogs} />
     </div>
   );
 }
