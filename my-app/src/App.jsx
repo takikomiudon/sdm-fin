@@ -128,7 +128,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="text-center bg-gray-800 text-white">
       <StockPriceChart stockPrices={stockPrices} />
       <GameYearAndPeriod year={year} period={period} isFinished={isFinished} />
       <PlayerInfoList
