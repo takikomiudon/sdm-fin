@@ -28,15 +28,17 @@ const StockPriceChart = (props) => {
       </h1>
       <table className="w-96 m-10 mt-0">
         <thead>
-          <th>A社</th>
-          <th>B社</th>
-          <th>C社</th>
-          <th>D社</th>
-          <th>E社</th>
+          <tr>
+            <th>A社</th>
+            <th>B社</th>
+            <th>C社</th>
+            <th>D社</th>
+            <th>E社</th>
+          </tr>
         </thead>
         <tbody>
           {priceArray.map((price, index) => (
-            <tr>
+            <tr key={index}>
               <td className={isCurrentPrice(index, 0)}>{price}</td>
               <td className={isCurrentPrice(index, 1)}>{price}</td>
               <td className={isCurrentPrice(index, 2)}>{price}</td>
