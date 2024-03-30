@@ -3,11 +3,7 @@ import { Button } from "@mui/material";
 import StockSelectButton from "./StockSelectButton";
 
 const StockSelector = (props) => {
-  const [stock0, setStock0] = useState(0);
-  const [stock1, setStock1] = useState(0);
-  const [stock2, setStock2] = useState(0);
-  const [stock3, setStock3] = useState(0);
-  const [stock4, setStock4] = useState(0);
+  const [stocks, setStocks] = useState([0, 0, 0, 0, 0]);
   const [message, setMessage] = useState("");
 
   const handleClick = () => {
@@ -32,12 +28,10 @@ const StockSelector = (props) => {
   };
 
   const validateTrade = () => {
-    let sum =
-      props.stockPrices[0] * stock0 +
-      props.stockPrices[1] * stock1 +
-      props.stockPrices[2] * stock2 +
-      props.stockPrices[3] * stock3 +
-      props.stockPrices[4] * stock4;
+    let sum = 0;
+    for (let i = 0; i < 5; i++) {
+      sum += props.stockPrices[i] * stocks[i];
+    }
 
     if (props.player1.money < sum) {
       return false;
@@ -45,11 +39,7 @@ const StockSelector = (props) => {
   };
 
   const initialTrade = () => {
-    setStock0(0);
-    setStock1(0);
-    setStock2(0);
-    setStock3(0);
-    setStock4(0);
+    setStocks([0, 0, 0, 0, 0]);
   };
 
   const priceArray = [
@@ -63,27 +53,7 @@ const StockSelector = (props) => {
       const setPlayer = props[`setPlayer${p}`];
 
       for (let i = 0; i < 5; i++) {
-        let stock = 0;
-
-        switch (i) {
-          case 0:
-            stock = stock0;
-            break;
-          case 1:
-            stock = stock1;
-            break;
-          case 2:
-            stock = stock2;
-            break;
-          case 3:
-            stock = stock3;
-            break;
-          case 4:
-            stock = stock4;
-            break;
-          default:
-            break;
-        }
+        let stock = stocks[i];
 
         if (stock === 0) {
           continue;
@@ -150,11 +120,11 @@ const StockSelector = (props) => {
   return (
     <div className="StockSelector">
       <div className="flex flex-row justify-evenly">
-        <StockSelectButton stock={stock0} setStock={setStock0} stockId={0} />
-        <StockSelectButton stock={stock1} setStock={setStock1} stockId={1} />
-        <StockSelectButton stock={stock2} setStock={setStock2} stockId={2} />
-        <StockSelectButton stock={stock3} setStock={setStock3} stockId={3} />
-        <StockSelectButton stock={stock4} setStock={setStock4} stockId={4} />
+        <StockSelectButton stocks={stocks} setStocks={setStocks} stockId={0} />
+        <StockSelectButton stocks={stocks} setStocks={setStocks} stockId={1} />
+        <StockSelectButton stocks={stocks} setStocks={setStocks} stockId={2} />
+        <StockSelectButton stocks={stocks} setStocks={setStocks} stockId={3} />
+        <StockSelectButton stocks={stocks} setStocks={setStocks} stockId={4} />
       </div>
       <div className="message">{message}</div>
       <Button
