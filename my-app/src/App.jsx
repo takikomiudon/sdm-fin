@@ -9,14 +9,17 @@ import Log from "./log/Log";
 import Start from "./start/Start";
 
 function App() {
-  const initialPlayerState = {
-    stocks: [0, 0, 0, 0, 0],
-    money: 1000,
-  };
-  const [player1, setPlayer1] = useState(initialPlayerState);
-  const [player2, setPlayer2] = useState(initialPlayerState);
-  const [player3, setPlayer3] = useState(initialPlayerState);
-  const [player4, setPlayer4] = useState(initialPlayerState);
+  const initialPlayerState = (name) => {
+    return {
+      name: name,
+      stocks: [0, 0, 0, 0, 0],
+      money: 1000,
+    };
+  }
+  const [player1, setPlayer1] = useState(initialPlayerState("あなた"));
+  const [player2, setPlayer2] = useState(initialPlayerState("CPU1"));
+  const [player3, setPlayer3] = useState(initialPlayerState("CPU2"));
+  const [player4, setPlayer4] = useState(initialPlayerState("CPU3"));
 
   const initialStockPriceState = [15, 15, 15, 15, 15];
   const [stockPrices, setStockPrices] = useState(initialStockPriceState);
@@ -86,27 +89,6 @@ function App() {
 
   const [actionLogs, setActionLogs] = useState([]);
 
-  const addActionLog = (
-    year,
-    period,
-    playerName,
-    stockType,
-    isBuy,
-    price,
-    quantity
-  ) => {
-    const newLogEntry = [
-      year,
-      period,
-      playerName,
-      stockType,
-      isBuy,
-      price,
-      quantity,
-    ];
-    setActionLogs([...actionLogs, newLogEntry]);
-  };
-
   // スタート画面が表示されないバグ
   if (isStarted) {
     return (
@@ -165,7 +147,8 @@ function App() {
           setPeriod={setPeriod}
           isFinished={isFinished}
           setIsFinished={setIsFinished}
-          addActionLog={addActionLog}
+          actionLogs={actionLogs}
+          setActionLogs={setActionLogs}
           eventNum={eventNum}
           setEventNum={setEventNum}
           eventArray={eventArray}

@@ -21,13 +21,13 @@ const Log = (props) => {
             }
             return (
               <tr key={index}>
-                <td>{log[0]}年目</td>
-                <td>第{log[1]}期</td>
-                <td>{log[2]}</td>
-                <td>{log[3]}</td>
-                <td>{log[4] ? "買い" : "売り"}</td>
-                <td>{log[5]}万円</td>
-                <td>{log[6]}株</td>
+                <td>{log.year}年目</td>
+                <td>第{log.period}期</td>
+                <td>{log.playerName}</td>
+                <td>{log.stockType}</td>
+                <td>{log.isBuy ? "買い" : "売り"}</td>
+                <td>{log.price}万円</td>
+                <td>{log.quantity}株</td>
               </tr>
             );
           })}
