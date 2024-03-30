@@ -20,6 +20,7 @@ const StockSelector = (props) => {
     } else if (props.period === 4) {
       props.setYear(props.year + 1);
       props.setPeriod(1);
+      // TODO 配当金の実装
     } else {
       props.setPeriod(props.period + 1);
     }
@@ -35,7 +36,9 @@ const StockSelector = (props) => {
 
     if (props.player1.money < sum) {
       return false;
-    } else return true;
+    } else {
+      return true;
+    }
   };
 
   const initialTrade = () => {
