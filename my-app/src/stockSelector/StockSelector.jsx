@@ -60,6 +60,7 @@ const StockSelector = (props) => {
       const isBuy = stock > 0;
       stock = isBuy ? stock : -stock;
 
+      // TODO: 売買は1株単位で行うため、50万円の状態で2株買うと50+60=110万円になる
       const dealingPrice = priceArray[props.stockPrices[i] + !isBuy];
 
       updatedPlayer.money -= stock * dealingPrice;
