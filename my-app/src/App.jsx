@@ -7,6 +7,7 @@ import Event from "./event/Event";
 import Result from "./result/Result";
 import Log from "./log/Log";
 import Start from "./start/Start";
+import Claude from "./claude/Claude";
 
 function App() {
   const initialPlayerState = (name) => {
@@ -130,6 +131,7 @@ function App() {
           eventArray={eventArray}
           isFinished={isFinished}
         />
+        <Claude />
         <StockSelector
           player1={player1}
           player2={player2}
