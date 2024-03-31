@@ -6,6 +6,11 @@ import { Player } from "../../types/player";
 import events from "../../data/events";
 import priceArray from "../../data/priceArray";
 import stockName from "../../data/stockName";
+import ScienceIcon from '@mui/icons-material/Science';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import ComputerIcon from '@mui/icons-material/Computer';
+import PsychologyIcon from '@mui/icons-material/Psychology';
 
 const StockSelector = ({
   player1,
@@ -180,26 +185,31 @@ const StockSelector = ({
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={0}
+          icon={<ScienceIcon />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={1}
+          icon={<AccountBalanceWalletIcon />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={2}
+          icon={<LocalShippingIcon />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={3}
+          icon={<ComputerIcon />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={4}
+          icon={<PsychologyIcon />}
         />
       </div>
       <div className="message">{message}</div>

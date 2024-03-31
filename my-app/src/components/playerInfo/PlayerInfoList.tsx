@@ -1,6 +1,11 @@
 import React from "react";
 import PlayerInfo from "./PlayerInfo";
 import { Player } from "../../types/player";
+import ScienceIcon from '@mui/icons-material/Science';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import ComputerIcon from '@mui/icons-material/Computer';
+import PsychologyIcon from '@mui/icons-material/Psychology';
 
 const PlayerInfoList = ({
   player1,
@@ -19,11 +24,11 @@ const PlayerInfoList = ({
         <thead>
           <tr>
             <th></th>
-            <th>A社</th>
-            <th>B社</th>
-            <th>C社</th>
-            <th>D社</th>
-            <th>E社</th>
+            <th><ScienceIcon /></th>
+            <th><AccountBalanceWalletIcon /></th>
+            <th><LocalShippingIcon /></th>
+            <th><ComputerIcon /></th>
+            <th><PsychologyIcon /></th>
             <th>所持金</th>
           </tr>
         </thead>

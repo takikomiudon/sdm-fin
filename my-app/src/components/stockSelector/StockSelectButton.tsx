@@ -7,10 +7,12 @@ const StockSelectButton = ({
   stocks,
   setStocks,
   stockId,
+  icon,
 }: {
   stocks: number[];
   setStocks: (stocks: number[]) => void;
   stockId: number;
+  icon: React.ReactNode;
 }) => {
   const getNewStock = (isBuy: boolean) => {
     return stocks.map((stock: number, index: number) => {
@@ -23,7 +25,7 @@ const StockSelectButton = ({
 
   return (
     <div className="flex flex-col">
-      <span>Stock {stockId}</span>
+      <span>{icon}</span>
       <Button variant="contained" onClick={() => setStocks(getNewStock(true))}>
         <AddIcon />
       </Button>
