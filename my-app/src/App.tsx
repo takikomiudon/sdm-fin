@@ -27,21 +27,11 @@ function App() {
   const [year, setYear] = useState(1);
   const [period, setPeriod] = useState(1);
 
-  const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
   const [eventNum, setEventNum] = useState(0);
 
   const [logs, setLogs] = useState<Log[]>([]);
-
-  // スタート画面が表示されないバグ
-  if (isStarted) {
-    return (
-      <div className="App">
-        <Start setIsStarted={setIsStarted} />
-      </div>
-    );
-  }
 
   if (isFinished) {
     return (
@@ -58,6 +48,7 @@ function App() {
 
   return (
     <div className="text-center bg-gray-800 text-white flex flex-row h-screen">
+      <Start />
       <StockPriceChart stockPrices={stockPrices} />
       <div className="flex flex-col justify-evenly">
         <GameYearAndPeriod year={year} period={period} />
