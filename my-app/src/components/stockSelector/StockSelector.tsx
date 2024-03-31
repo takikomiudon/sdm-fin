@@ -4,6 +4,7 @@ import StockSelectButton from "./StockSelectButton";
 import claude from "../../claude/claude";
 import { Player } from "../../types/player";
 import events from "../../data/events";
+import priceArray from "../../data/priceArray";
 
 const StockSelector = ({
   player1,
@@ -98,11 +99,6 @@ const StockSelector = ({
   const initialTrade = () => {
     setPlayerStocks([0, 0, 0, 0, 0]);
   };
-
-  const priceArray = [
-    460, 390, 330, 280, 240, 200, 180, 160, 140, 120, 100, 90, 80, 70, 60, 50,
-    40, 30, 20, 10, 0,
-  ];
 
   const trade = (
     stocks: number[],

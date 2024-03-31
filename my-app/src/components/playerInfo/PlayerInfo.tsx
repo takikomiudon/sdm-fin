@@ -1,3 +1,4 @@
+import React from "react";
 import logo from "./img/logo192.png";
 import { Player } from "../../types/player";
 
