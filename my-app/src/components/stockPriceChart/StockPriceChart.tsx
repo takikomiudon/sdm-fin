@@ -29,7 +29,7 @@ const StockPriceChart = ({ stockPrices }: { stockPrices: number[] }) => {
       <h1 className="text-amber-400 text-xl font-serif font-bold">
         現在の株価
       </h1>
-      <table className="w-96 m-10 mt-0">
+      <table className="w-96 mx-10 mt-0 mb-auto">
         <thead>
           <tr>
             <th><ScienceIcon /></th>

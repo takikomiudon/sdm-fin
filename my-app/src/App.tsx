@@ -57,7 +57,7 @@ function App() {
   }
 
   return (
-    <div className="text-center bg-gray-800 text-white flex flex-row ">
+    <div className="text-center bg-gray-800 text-white flex flex-row h-screen">
       <StockPriceChart stockPrices={stockPrices} />
       <div className="flex flex-col justify-evenly">
         <GameYearAndPeriod year={year} period={period} />
