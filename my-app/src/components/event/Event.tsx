@@ -1,5 +1,5 @@
 import React from "react";
-import events from "../data/events";
+import events from "../../data/events";
 
 const Event = ({ eventNum }: { eventNum: number }) => {
   return (

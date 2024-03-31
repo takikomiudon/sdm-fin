@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import GameYearAndPeriod from "./gameYearAndPeriod/GameYearAndPeriod";
-import PlayerInfoList from "./playerInfo/PlayerInfoList";
-import StockPriceChart from "./stockPriceChart/StockPriceChart";
-import StockSelector from "./stockSelector/StockSelector";
-import Event from "./event/Event";
-import Result from "./result/Result";
-import Logs from "./log/Logs";
-import Start from "./start/Start";
+import GameYearAndPeriod from "./components/gameYearAndPeriod/GameYearAndPeriod";
+import PlayerInfoList from "./components/playerInfo/PlayerInfoList";
+import StockPriceChart from "./components/stockPriceChart/StockPriceChart";
+import StockSelector from "./components/stockSelector/StockSelector";
+import Event from "./components/event/Event";
+import Result from "./components/result/Result";
+import Logs from "./components/log/Logs";
+import Start from "./components/start/Start";
 import { Log } from "./types/log";
 
 function App() {

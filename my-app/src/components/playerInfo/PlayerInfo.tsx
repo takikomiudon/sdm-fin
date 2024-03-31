@@ -1,5 +1,5 @@
 import logo from "./img/logo192.png";
-import { Player } from "../types/player";
+import { Player } from "../../types/player";
 
 const PlayerInfo = ({ player }: { player: Player }) => {
   return (

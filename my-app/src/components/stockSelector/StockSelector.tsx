@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import StockSelectButton from "./StockSelectButton";
-import claude from "../claude/claude";
-import { Player } from "../types/player";
-import events from "../data/events";
+import claude from "../../claude/claude";
+import { Player } from "../../types/player";
+import events from "../../data/events";
 
 const StockSelector = ({
   player1,

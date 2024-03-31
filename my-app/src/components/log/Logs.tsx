@@ -1,5 +1,5 @@
 import React from "react";
-import { Log } from "../types/log";
+import { Log } from "../../types/log";
 
 const Logs = ({ logs }: { logs: Log[] }) => {
   return (

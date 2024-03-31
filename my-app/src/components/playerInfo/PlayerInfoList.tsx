@@ -1,6 +1,6 @@
 import React from "react";
 import PlayerInfo from "./PlayerInfo";
-import { Player } from "../types/player";
+import { Player } from "../../types/player";
 
 const PlayerInfoList = ({
   player1,

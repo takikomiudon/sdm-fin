@@ -1,5 +1,5 @@
 import React from "react";
-import { Player } from "../types/player";
+import { Player } from "../../types/player";
 
 const Result = ({
   player1,
