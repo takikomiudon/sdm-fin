@@ -27,7 +27,7 @@ function App() {
   const [year, setYear] = useState(1);
   const [period, setPeriod] = useState(1);
 
-  const [isFinished, setIsFinished] = useState(true);
+  const [isFinished, setIsFinished] = useState(false);
 
   const [eventNum, setEventNum] = useState(0);
 
