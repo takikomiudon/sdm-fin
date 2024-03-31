@@ -5,6 +5,7 @@ import claude from "../../claude/claude";
 import { Player } from "../../types/player";
 import events from "../../data/events";
 import priceArray from "../../data/priceArray";
+import stockName from "../../data/stockName";
 
 const StockSelector = ({
   player1,
@@ -137,7 +138,7 @@ const StockSelector = ({
           year: year,
           period: period,
           playerName: player.name,
-          stockType: `stock${i}`,
+          stockType: stockName[i],
           isBuy: isBuy,
           price: dealingPrice,
           quantity: stock,
