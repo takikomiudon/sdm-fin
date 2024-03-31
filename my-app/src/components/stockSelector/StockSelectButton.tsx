@@ -17,7 +17,8 @@ const StockSelectButton = ({
   const getNewStock = (isBuy: boolean) => {
     return stocks.map((stock: number, index: number) => {
       if (index === stockId) {
-        return stock + (isBuy ? 1 : -1);
+        const newStock = stock + (isBuy ? 1 : -1);
+        return Math.max(-5, Math.min(5, newStock));
       }
       return stock;
     });
