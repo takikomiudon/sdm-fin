@@ -1,18 +1,28 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import StockSelectButton from "./StockSelectButton";
+import claude from "../claude/claude";
 
 const StockSelector = (props) => {
   const [playerStocks, setPlayerStocks] = useState([0, 0, 0, 0, 0]);
   const [message, setMessage] = useState("");
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!validateTrade(playerStocks, props.player1.money)) {
       setMessage("所持金が足りません");
       return;
     }
     trade(playerStocks, props.player1, props.setPlayer1);
     initialTrade();
+
+    let claudeStocks = await claude(props);
+    if (!validateTrade(claudeStocks, props.player2.money)) {
+      console.log("claudeの所持金が足りません");
+      claudeStocks = [0, 0, 0, 0, 0];
+      return;
+    }
+    trade(claudeStocks, props.player2, props.setPlayer2);
+
     event();
 
     if (props.year === 4 && props.period === 4) {
@@ -47,44 +57,48 @@ const StockSelector = (props) => {
   ];
 
   const trade = (stocks, player, setPlayer) => {
-    let updatedPlayer = JSON.parse(JSON.stringify(player));
-    let updatedActionLogs = [...props.actionLogs];
+    try {
+      let updatedPlayer = JSON.parse(JSON.stringify(player));
+      let updatedActionLogs = [...props.actionLogs];
 
-    for (let i = 0; i < 5; i++) {
-      let stock = stocks[i];
+      for (let i = 0; i < 5; i++) {
+        let stock = stocks[i];
 
-      if (stock === 0) {
-        continue;
+        if (stock === 0) {
+          continue;
+        }
+
+        const isBuy = stock > 0;
+        stock = isBuy ? stock : -stock;
+
+        // TODO: 売買は1株単位で行うため、50万円の状態で2株買うと50+60=110万円になる
+        const dealingPrice = priceArray[props.stockPrices[i] + !isBuy];
+
+        updatedPlayer.money -= stock * dealingPrice;
+        updatedPlayer.stocks[i] += isBuy ? stock : -stock;
+
+        props.setStockPrices((currentPrices) => {
+          const updatedPrices = [...currentPrices];
+          updatedPrices[i] += isBuy ? -stock : stock;
+          return updatedPrices;
+        });
+
+        updatedActionLogs.push({
+          year: props.year,
+          period: props.period,
+          playerName: player.name,
+          stockType: `stock${i}`,
+          isBuy: isBuy,
+          price: dealingPrice,
+          quantity: stock,
+        });
       }
 
-      const isBuy = stock > 0;
-      stock = isBuy ? stock : -stock;
-
-      // TODO: 売買は1株単位で行うため、50万円の状態で2株買うと50+60=110万円になる
-      const dealingPrice = priceArray[props.stockPrices[i] + !isBuy];
-
-      updatedPlayer.money -= stock * dealingPrice;
-      updatedPlayer.stocks[i] += isBuy ? stock : -stock;
-
-      props.setStockPrices((currentPrices) => {
-        const updatedPrices = [...currentPrices];
-        updatedPrices[i] += isBuy ? -stock : stock;
-        return updatedPrices;
-      });
-
-      updatedActionLogs.push({
-        year: props.year,
-        period: props.period,
-        playerName: player.name,
-        stockType: `stock${i}`,
-        isBuy: isBuy,
-        price: dealingPrice,
-        quantity: stock,
-      });
+      setPlayer(updatedPlayer);
+      props.setActionLogs(updatedActionLogs);
+    } catch (error) {
+      console.error(error);
     }
-
-    setPlayer(updatedPlayer);
-    props.setActionLogs(updatedActionLogs);
   };
 
   const event = () => {

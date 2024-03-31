@@ -7,7 +7,6 @@ import Event from "./event/Event";
 import Result from "./result/Result";
 import Log from "./log/Log";
 import Start from "./start/Start";
-import Claude from "./claude/Claude";
 
 function App() {
   const initialPlayerState = (name) => {
@@ -16,11 +15,11 @@ function App() {
       stocks: [0, 0, 0, 0, 0],
       money: 1000,
     };
-  }
+  };
   const [player1, setPlayer1] = useState(initialPlayerState("あなた"));
-  const [player2, setPlayer2] = useState(initialPlayerState("CPU1"));
-  const [player3, setPlayer3] = useState(initialPlayerState("CPU2"));
-  const [player4, setPlayer4] = useState(initialPlayerState("CPU3"));
+  const [player2, setPlayer2] = useState(initialPlayerState("claude"));
+  const [player3, setPlayer3] = useState(initialPlayerState("CPU1"));
+  const [player4, setPlayer4] = useState(initialPlayerState("CPU2"));
 
   const initialStockPriceState = [15, 15, 15, 15, 15];
   const [stockPrices, setStockPrices] = useState(initialStockPriceState);
@@ -131,7 +130,6 @@ function App() {
           eventArray={eventArray}
           isFinished={isFinished}
         />
-        <Claude />
         <StockSelector
           player1={player1}
           player2={player2}
