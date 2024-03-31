@@ -50,6 +50,8 @@ const StockSelector = ({
 }) => {
   const [playerStocks, setPlayerStocks] = useState([0, 0, 0, 0, 0]);
   const [message, setMessage] = useState("");
+  let updatedLogs = [...logs];
+  let updatedStockPrices = [...stockPrices];
 
   const handleClick = async () => {
     if (!validateTrade(playerStocks, player1.money)) {
@@ -73,7 +75,11 @@ const StockSelector = ({
     }
     trade(claudeStocks, player2, setPlayer2);
 
+    setLogs(updatedLogs);
+
     event();
+
+    setStockPrices(updatedStockPrices);
 
     if (year === 4 && period === 4) {
       setIsFinished(true);
@@ -108,7 +114,6 @@ const StockSelector = ({
   ) => {
     try {
       let updatedPlayer = JSON.parse(JSON.stringify(player));
-      let updatedLogs = [...logs];
 
       for (let i = 0; i < 5; i++) {
         let stock = stocks[i];
@@ -128,11 +133,7 @@ const StockSelector = ({
         updatedPlayer.money -= dealingPrice;
         updatedPlayer.stocks[i] += isBuy ? stock : -stock;
 
-        setStockPrices((currentPrices) => {
-          const updatedPrices = [...currentPrices];
-          updatedPrices[i] += isBuy ? -stock : stock;
-          return updatedPrices;
-        });
+        updatedStockPrices[i] += isBuy ? -stock : stock;
 
         updatedLogs.push({
           year: year,
@@ -146,26 +147,21 @@ const StockSelector = ({
       }
 
       setPlayer(updatedPlayer);
-      setLogs(updatedLogs);
     } catch (error) {
       console.error(error);
     }
   };
 
   const event = () => {
-    setStockPrices((currentPrices) => {
-      const newPrices = [...currentPrices];
-      for (let i = 0; i < 5; i++) {
-        if (newPrices[i] - events[eventNum].effect[i] < 0) {
-          newPrices[i] = 0;
-        } else if (newPrices[i] - events[eventNum].effect[i] > 19) {
-          newPrices[i] = 19;
-        } else {
-          newPrices[i] -= events[eventNum].effect[i];
-        }
+    for (let i = 0; i < 5; i++) {
+      if (updatedStockPrices[i] - events[eventNum].effect[i] < 0) {
+        updatedStockPrices[i] = 0;
+      } else if (updatedStockPrices[i] - events[eventNum].effect[i] > 19) {
+        updatedStockPrices[i] = 19;
+      } else {
+        updatedStockPrices[i] -= events[eventNum].effect[i];
       }
-      return newPrices;
-    });
+    }
   };
 
   return (
