@@ -2,46 +2,94 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import StockSelectButton from "./StockSelectButton";
 import claude from "../claude/claude";
+import { Player } from "../types/player";
+import events from "../data/events";
 
-const StockSelector = (props) => {
+const StockSelector = ({
+  player1,
+  setPlayer1,
+  player2,
+  setPlayer2,
+  player3,
+  setPlayer3,
+  player4,
+  setPlayer4,
+  stockPrices,
+  setStockPrices,
+  year,
+  setYear,
+  period,
+  setPeriod,
+  setIsFinished,
+  logs,
+  setLogs,
+  eventNum,
+  setEventNum,
+}: {
+  player1: Player;
+  setPlayer1: React.Dispatch<React.SetStateAction<Player>>;
+  player2: Player;
+  setPlayer2: React.Dispatch<React.SetStateAction<Player>>;
+  player3: Player;
+  setPlayer3: React.Dispatch<React.SetStateAction<Player>>;
+  player4: Player;
+  setPlayer4: React.Dispatch<React.SetStateAction<Player>>;
+  stockPrices: number[];
+  setStockPrices: React.Dispatch<React.SetStateAction<number[]>>;
+  year: number;
+  setYear: React.Dispatch<React.SetStateAction<number>>;
+  period: number;
+  setPeriod: React.Dispatch<React.SetStateAction<number>>;
+  setIsFinished: React.Dispatch<React.SetStateAction<boolean>>;
+  logs: any[];
+  setLogs: React.Dispatch<React.SetStateAction<any[]>>;
+  eventNum: number;
+  setEventNum: React.Dispatch<React.SetStateAction<number>>;
+}) => {
   const [playerStocks, setPlayerStocks] = useState([0, 0, 0, 0, 0]);
   const [message, setMessage] = useState("");
 
   const handleClick = async () => {
-    if (!validateTrade(playerStocks, props.player1.money)) {
+    if (!validateTrade(playerStocks, player1.money)) {
       setMessage("所持金が足りません");
       return;
     }
-    trade(playerStocks, props.player1, props.setPlayer1);
+    trade(playerStocks, player1, setPlayer1);
     initialTrade();
 
-    let claudeStocks = await claude(props);
-    if (!validateTrade(claudeStocks, props.player2.money)) {
+    let claudeStocks = await claude(
+      stockPrices,
+      player2,
+      events[eventNum].effect,
+      year,
+      period
+    );
+    if (!validateTrade(claudeStocks, player2.money)) {
       console.log("claudeの所持金が足りません");
       claudeStocks = [0, 0, 0, 0, 0];
       return;
     }
-    trade(claudeStocks, props.player2, props.setPlayer2);
+    trade(claudeStocks, player2, setPlayer2);
 
     event();
 
-    if (props.year === 4 && props.period === 4) {
-      props.setIsFinished(true);
-    } else if (props.period === 4) {
-      props.setYear(props.year + 1);
-      props.setPeriod(1);
+    if (year === 4 && period === 4) {
+      setIsFinished(true);
+    } else if (period === 4) {
+      setYear(year + 1);
+      setPeriod(1);
       // TODO 配当金の実装
     } else {
-      props.setPeriod(props.period + 1);
+      setPeriod(period + 1);
     }
 
-    props.setEventNum(props.eventNum + 1);
+    setEventNum(eventNum + 1);
   };
 
-  const validateTrade = (stocks, money) => {
+  const validateTrade = (stocks: number[], money: number) => {
     let sum = 0;
     for (let i = 0; i < 5; i++) {
-      sum += props.stockPrices[i] * stocks[i];
+      sum += stockPrices[i] * stocks[i];
     }
 
     return sum <= money;
@@ -56,10 +104,14 @@ const StockSelector = (props) => {
     40, 30, 20, 10, 0,
   ];
 
-  const trade = (stocks, player, setPlayer) => {
+  const trade = (
+    stocks: number[],
+    player: Player,
+    setPlayer: React.Dispatch<React.SetStateAction<Player>>
+  ) => {
     try {
       let updatedPlayer = JSON.parse(JSON.stringify(player));
-      let updatedActionLogs = [...props.actionLogs];
+      let updatedLogs = [...logs];
 
       for (let i = 0; i < 5; i++) {
         let stock = stocks[i];
@@ -72,20 +124,20 @@ const StockSelector = (props) => {
         stock = isBuy ? stock : -stock;
 
         // TODO: 売買は1株単位で行うため、50万円の状態で2株買うと50+60=110万円になる
-        const dealingPrice = priceArray[props.stockPrices[i] + !isBuy];
+        const dealingPrice = priceArray[stockPrices[i] + (isBuy ? 0 : 1)];
 
         updatedPlayer.money -= stock * dealingPrice;
         updatedPlayer.stocks[i] += isBuy ? stock : -stock;
 
-        props.setStockPrices((currentPrices) => {
+        setStockPrices((currentPrices) => {
           const updatedPrices = [...currentPrices];
           updatedPrices[i] += isBuy ? -stock : stock;
           return updatedPrices;
         });
 
-        updatedActionLogs.push({
-          year: props.year,
-          period: props.period,
+        updatedLogs.push({
+          year: year,
+          period: period,
           playerName: player.name,
           stockType: `stock${i}`,
           isBuy: isBuy,
@@ -95,22 +147,22 @@ const StockSelector = (props) => {
       }
 
       setPlayer(updatedPlayer);
-      props.setActionLogs(updatedActionLogs);
+      setLogs(updatedLogs);
     } catch (error) {
       console.error(error);
     }
   };
 
   const event = () => {
-    props.setStockPrices((currentPrices) => {
+    setStockPrices((currentPrices) => {
       const newPrices = [...currentPrices];
       for (let i = 0; i < 5; i++) {
-        if (newPrices[i] - props.eventArray[props.eventNum][i] < 0) {
+        if (newPrices[i] - events[eventNum].effect[i] < 0) {
           newPrices[i] = 0;
-        } else if (newPrices[i] - props.eventArray[props.eventNum][i] > 19) {
+        } else if (newPrices[i] - events[eventNum].effect[i] > 19) {
           newPrices[i] = 19;
         } else {
-          newPrices[i] -= props.eventArray[props.eventNum][i];
+          newPrices[i] -= events[eventNum].effect[i];
         }
       }
       return newPrices;

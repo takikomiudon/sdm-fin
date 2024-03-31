@@ -3,11 +3,11 @@ const priceArray = [
   30, 20, 10, 0,
 ];
 
-const StockPriceChart = (props) => {
-  const isCurrentPrice = (index, stock) => {
-    if (index === props.stockPrices[stock]) {
+const StockPriceChart = ({ stockPrices }: { stockPrices: number[] }) => {
+  const isCurrentPrice = (index: number, stock: number) => {
+    if (index === stockPrices[stock]) {
       return "bg-blue-700";
-    } else if (index === props.stockPrices[stock] + 1) {
+    } else if (index === stockPrices[stock] + 1) {
       return "bg-red-700";
     } else if (index < 3) {
       return "bg-black text-amber-400 font-serif font-bold";

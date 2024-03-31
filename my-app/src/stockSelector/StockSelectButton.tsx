@@ -2,15 +2,23 @@ import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
-const StockSelectButton = ({ stocks, setStocks, stockId }) => {
-  const getNewStock = (isBuy) => {
-    return stocks.map((stock, i) => {
-      if (i === stockId) {
+const StockSelectButton = ({
+  stocks,
+  setStocks,
+  stockId,
+}: {
+  stocks: number[];
+  setStocks: (stocks: number[]) => void;
+  stockId: number;
+}) => {
+  const getNewStock = (isBuy: boolean) => {
+    return stocks.map((stock: number, index: number) => {
+      if (index === stockId) {
         return stock + (isBuy ? 1 : -1);
       }
       return stock;
     });
-  }
+  };
 
   return (
     <div className="flex flex-col">

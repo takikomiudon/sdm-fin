@@ -1,4 +1,7 @@
-const Log = (props) => {
+import React from "react";
+import { Log } from "../types/log";
+
+const Logs = ({ logs }: { logs: Log[] }) => {
   return (
     <div className="m-10">
       <h2>取引履歴</h2>
@@ -15,8 +18,8 @@ const Log = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.actionLogs.map((log, index) => {
-            if (log.length === 0) {
+          {logs.map((log, index) => {
+            if (logs.length === 0) {
               return null;
             }
             return (
@@ -37,4 +40,4 @@ const Log = (props) => {
   );
 };
 
-export default Log;
+export default Logs;

@@ -1,6 +1,18 @@
+import React from "react";
 import PlayerInfo from "./PlayerInfo";
+import { Player } from "../types/player";
 
-const PlayerInfoList = (props) => {
+const PlayerInfoList = ({
+  player1,
+  player2,
+  player3,
+  player4,
+}: {
+  player1: Player;
+  player2: Player;
+  player3: Player;
+  player4: Player;
+}) => {
   return (
     <div>
       <table className="w-96">
@@ -16,13 +28,12 @@ const PlayerInfoList = (props) => {
           </tr>
         </thead>
         <tbody>
-          <PlayerInfo player={props.player1} playerNumber={1} />
-          <PlayerInfo player={props.player2} playerNumber={2} />
-          <PlayerInfo player={props.player3} playerNumber={3} />
-          <PlayerInfo player={props.player4} playerNumber={4} />
+          <PlayerInfo player={player1} />
+          <PlayerInfo player={player2} />
+          <PlayerInfo player={player3} />
+          <PlayerInfo player={player4} />
         </tbody>
       </table>
-      
     </div>
   );
 };
