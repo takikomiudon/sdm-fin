@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import StockSelectButton from "./StockSelectButton";
 import claude from "../../claude/claude";
 import { Player } from "../../types/player";
@@ -50,12 +50,17 @@ const StockSelector = ({
 }) => {
   const [playerStocks, setPlayerStocks] = useState([0, 0, 0, 0, 0]);
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   let updatedLogs = [...logs];
   let updatedStockPrices = [...stockPrices];
 
   const handleClick = async () => {
+    setIsLoading(true);
+    setMessage("");
+
     if (!validateTrade(playerStocks, player1.money)) {
       setMessage("所持金が足りません");
+      setIsLoading(false);
       return;
     }
     trade(playerStocks, player1, setPlayer1);
@@ -71,6 +76,7 @@ const StockSelector = ({
     if (!validateTrade(claudeStocks, player2.money)) {
       console.log("claudeの所持金が足りません");
       claudeStocks = [0, 0, 0, 0, 0];
+      setIsLoading(false);
       return;
     }
     trade(claudeStocks, player2, setPlayer2);
@@ -92,6 +98,8 @@ const StockSelector = ({
     }
 
     setEventNum(eventNum + 1);
+
+    setIsLoading(false);
   };
 
   const validateTrade = (stocks: number[], money: number) => {
@@ -127,7 +135,8 @@ const StockSelector = ({
 
         let dealingPrice = 0;
         for (let j = 0; j < stock; j++) {
-          dealingPrice += priceArray[stockPrices[i] + (isBuy ? 0 : 1) + (isBuy ? -j : j)];
+          dealingPrice +=
+            priceArray[stockPrices[i] + (isBuy ? 0 : 1) + (isBuy ? -j : j)];
         }
 
         updatedPlayer.money -= dealingPrice;
@@ -200,7 +209,7 @@ const StockSelector = ({
         onClick={handleClick}
         className="button"
       >
-        決定
+        {isLoading ? <CircularProgress color="inherit" size={24} /> : "決定"}
       </Button>
     </div>
   );
