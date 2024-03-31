@@ -12,11 +12,11 @@ const Event = ({ eventNum }: { eventNum: number }) => {
       <h1>イベント</h1>
       <h2>{events[eventNum].name}</h2>
       <p className="flex flex-row justify-evenly">
-        <ScienceIcon />{events[eventNum].effect[0]}
-        <AccountBalanceWalletIcon />{events[eventNum].effect[1]}
-        <LocalShippingIcon />{events[eventNum].effect[2]}
-        <ComputerIcon />{events[eventNum].effect[3]}
-        <PsychologyIcon />{events[eventNum].effect[4]}
+        <ScienceIcon />{events[eventNum].effect[0] > 0 ? "+" : ""}{events[eventNum].effect[0]}
+        <AccountBalanceWalletIcon />{events[eventNum].effect[1] > 0 ? "+" : ""}{events[eventNum].effect[1]}
+        <LocalShippingIcon />{events[eventNum].effect[2] > 0 ? "+" : ""}{events[eventNum].effect[2]}
+        <ComputerIcon />{events[eventNum].effect[3] > 0 ? "+" : ""}{events[eventNum].effect[3]}
+        <PsychologyIcon />{events[eventNum].effect[4] > 0 ? "+" : ""}{events[eventNum].effect[4]}
       </p>
     </div>
   );
