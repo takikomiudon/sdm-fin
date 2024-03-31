@@ -18,7 +18,7 @@ function App() {
     };
   };
   const [player1, setPlayer1] = useState(initialPlayerState("あなた"));
-  const [player2, setPlayer2] = useState(initialPlayerState("claude"));
+  const [player2, setPlayer2] = useState(initialPlayerState("Claude"));
   const [player3, setPlayer3] = useState(initialPlayerState("CPU1"));
   const [player4, setPlayer4] = useState(initialPlayerState("CPU2"));
 
@@ -27,24 +27,11 @@ function App() {
   const [year, setYear] = useState(1);
   const [period, setPeriod] = useState(1);
 
-  const [isFinished, setIsFinished] = useState(false);
+  const [isFinished, setIsFinished] = useState(true);
 
   const [eventNum, setEventNum] = useState(0);
 
   const [logs, setLogs] = useState<Log[]>([]);
-
-  if (isFinished) {
-    return (
-      <div className="App">
-        <Result
-          player1={player1}
-          player2={player2}
-          player3={player3}
-          player4={player4}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="text-center bg-gray-800 text-white flex flex-row h-screen">
@@ -82,6 +69,13 @@ function App() {
         />
       </div>
       <Logs logs={logs} />
+      <Result
+        player1={player1}
+        player2={player2}
+        player3={player3}
+        player4={player4}
+        isFinished={isFinished}
+      />
     </div>
   );
 }
