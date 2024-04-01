@@ -7,6 +7,9 @@ import ComputerIcon from '@mui/icons-material/Computer';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 
 const Event = ({ eventNum }: { eventNum: number }) => {
+  if (eventNum > 15) {
+    return null;
+  }
   return (
     <div>
       <h1>イベント</h1>

@@ -70,8 +70,7 @@ const StockSelector = ({
       logs: [],
     });
 
-    if (!validateTrade(playerStocks, player1.money)) {
-      setMessage("所持金が足りません");
+    if (!validateTrade(playerStocks, player1, updatedStockPrices)) {
       setIsLoading(false);
       return;
     }
@@ -85,11 +84,9 @@ const StockSelector = ({
       year,
       period
     );
-    if (!validateTrade(claudeStocks, player2.money)) {
-      console.log("claudeの所持金が足りません");
+    if (!validateTrade(claudeStocks, player2, updatedStockPrices)) {
       claudeStocks = [0, 0, 0, 0, 0];
       setIsLoading(false);
-      return;
     }
     trade(claudeStocks, player2, setPlayer2);
 
@@ -114,13 +111,49 @@ const StockSelector = ({
     setIsLoading(false);
   };
 
-  const validateTrade = (stocks: number[], money: number) => {
+  const validateTrade = (stocks: number[], player: Player, updatedStockPrices: number[]) => {
     let sum = 0;
+
     for (let i = 0; i < 5; i++) {
-      sum += stockPrices[i] * stocks[i];
+      for (let j = 0; j < Math.abs(stocks[i]); j++) {
+        if (stocks[i] > 0) {
+          sum += priceArray[updatedStockPrices[i] - j];
+        } else if (stocks[i] < 0) {
+          sum -= priceArray[updatedStockPrices[i] + 1 + j];
+        }
+      }
     }
 
-    return sum <= money;
+    if (sum > player.money) {
+      if (player.name === "あなた") {
+        setMessage(`所持金が足りません 取引金額:${sum}万円`);
+      } else {
+        console.log("所持金が足りません");
+      }
+      return false;
+    }
+
+    for (let i = 0; i < 5; i++) {
+      if (player.stocks[i] + stocks[i] < 0) {
+        if (player.name === "あなた") {
+          setMessage("持ち株数を上回る売却はできません");
+        } else {
+          console.log("持ち株数を上回る売却はできません");
+        }
+        return false;
+      }
+
+      if (Math.abs(stocks[i]) > 5) {
+        if (player.name === "あなた") {
+          setMessage("売買株数は5株以下にしてください");
+        } else {
+          console.log("売買株数は5株以下にしてください");
+        }
+        return false;
+      }
+    }
+
+    return true;
   };
 
   const initialTrade = () => {
@@ -155,7 +188,7 @@ const StockSelector = ({
             priceArray[stockPrices[i] + (isBuy ? 0 : 1) + (isBuy ? -j : j)];
         }
 
-        updatedPlayer.money -= dealingPrice;
+        updatedPlayer.money += (isBuy ? -1 : 1) * dealingPrice;
         updatedPlayer.stocks[i] += isBuy ? stock : -stock;
 
         updatedStockPrices[i] += isBuy ? -stock : stock;
