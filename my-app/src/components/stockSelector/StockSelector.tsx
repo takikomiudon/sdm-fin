@@ -6,11 +6,12 @@ import { Player } from "../../types/player";
 import events from "../../data/events";
 import priceArray from "../../data/priceArray";
 import stockName from "../../data/stockName";
-import ScienceIcon from '@mui/icons-material/Science';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import ComputerIcon from '@mui/icons-material/Computer';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import ScienceIcon from "@mui/icons-material/Science";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import ComputerIcon from "@mui/icons-material/Computer";
+import PsychologyIcon from "@mui/icons-material/Psychology";
+import { Log } from "../../types/log";
 
 const StockSelector = ({
   player1,
@@ -48,8 +49,8 @@ const StockSelector = ({
   period: number;
   setPeriod: React.Dispatch<React.SetStateAction<number>>;
   setIsFinished: React.Dispatch<React.SetStateAction<boolean>>;
-  logs: any[];
-  setLogs: React.Dispatch<React.SetStateAction<any[]>>;
+  logs: Log[];
+  setLogs: React.Dispatch<React.SetStateAction<Log[]>>;
   eventNum: number;
   setEventNum: React.Dispatch<React.SetStateAction<number>>;
 }) => {
@@ -62,6 +63,12 @@ const StockSelector = ({
   const handleClick = async () => {
     setIsLoading(true);
     setMessage("");
+
+    updatedLogs.push({
+      year: year,
+      period: period,
+      logs: [],
+    });
 
     if (!validateTrade(playerStocks, player1.money)) {
       setMessage("所持金が足りません");
@@ -127,6 +134,10 @@ const StockSelector = ({
   ) => {
     try {
       let updatedPlayer = JSON.parse(JSON.stringify(player));
+      updatedLogs[updatedLogs.length - 1].logs.push({
+        playerName: updatedPlayer.name,
+        logs: [],
+      });
 
       for (let i = 0; i < 5; i++) {
         let stock = stocks[i];
@@ -149,10 +160,9 @@ const StockSelector = ({
 
         updatedStockPrices[i] += isBuy ? -stock : stock;
 
-        updatedLogs.push({
-          year: year,
-          period: period,
-          playerName: player.name,
+        updatedLogs[updatedLogs.length - 1].logs[
+          updatedLogs[updatedLogs.length - 1].logs.length - 1
+        ].logs.push({
           stockType: stockName[i],
           isBuy: isBuy,
           price: dealingPrice,
