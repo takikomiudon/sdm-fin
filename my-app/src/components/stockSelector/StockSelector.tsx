@@ -116,7 +116,7 @@ const StockSelector = ({
 
   const validateTrade = (stocks: number[], player: Player, updatedStockPrices: number[]) => {
     let sum = 0;
-    let total_stocks=0;
+    let total_stocks = 0;
 
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < Math.abs(stocks[i]); j++) {
@@ -126,7 +126,7 @@ const StockSelector = ({
           sum -= priceArray[updatedStockPrices[i] + 1 + j];
         }
       }
-      total_stocks += Math.abs(stocks[i]); 
+      total_stocks += Math.abs(stocks[i]);
     }
 
     if (sum > player.money) {
@@ -157,8 +157,8 @@ const StockSelector = ({
         return false;
       }
     }
-    
-    if (total_stocks > 5){
+
+    if (total_stocks > 5) {
       if (player.name === "あなた") {
         setMessage("売買株数は合計5株以下にしてください");
       } else {
@@ -196,10 +196,7 @@ const StockSelector = ({
         stock = isBuy ? stock : -stock;
 
         let dealingPrice = 0;
-        dealingPrice +=
-            priceArray[stockPrices[i] + (isBuy ? 0 : 1)]*stock;
-        
-
+        dealingPrice += priceArray[stockPrices[i] + (isBuy ? 0 : 1)] * stock;
 
         updatedPlayer.money += (isBuy ? -1 : 1) * dealingPrice;
         updatedPlayer.stocks[i] += isBuy ? stock : -stock;
@@ -233,25 +230,25 @@ const StockSelector = ({
       }
     }
   };
-  
+
   const dividend = (
     player: Player,
     setPlayer: React.Dispatch<React.SetStateAction<Player>>
   ) => {
-    var multiple=[0,0,0,0,0]; //倍率の設定
-    if (year == 1){
+    let multiple = [];
+    if (year === 1) {
       multiple = [20, 0, 10, 30, 0];
-    }else if (year == 2){
+    } else if (year === 2) {
       multiple = [20, 20, 20, 30, 0];
-    }else if (year == 3){
+    } else if (year === 3) {
       multiple = [20, 0, 10, 20, 0];
-    }else{
-      multiple = [ 0, 0, 0, 0, 0];
+    } else {
+      multiple = [0, 0, 0, 0, 0];
     }
-    for(let i = 0; i < 5; i++){
-      player.money += player.stocks[i]*multiple[i];
-    } 
-    setPlayer(player)
+    for (let i = 0; i < 5; i++) {
+      player.money += player.stocks[i] * multiple[i];
+    }
+    setPlayer(player);
   };
   return (
     <div className="StockSelector">
