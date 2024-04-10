@@ -8,6 +8,7 @@ import Result from "./components/result/Result";
 import Logs from "./components/log/Logs";
 import Start from "./components/start/Start";
 import { Log } from "./types/log";
+import AlertDialog from "./components/alertDialog/AlertDialog";
 
 function App() {
   const initialPlayerState = (name: string) => {
@@ -35,6 +36,7 @@ function App() {
 
   return (
     <div className="text-center bg-gray-800 text-white flex flex-row h-screen">
+      {year === 4 && period === 1 ? <AlertDialog /> : null}
       <Start />
       <StockPriceChart stockPrices={stockPrices} />
       <div className="flex flex-col justify-evenly">

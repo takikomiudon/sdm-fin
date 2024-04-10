@@ -1,5 +1,19 @@
 import React, { useState } from "react";
-import { Button, CircularProgress } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@mui/material";
 import StockSelectButton from "./StockSelectButton";
 import claude from "../../claude/claude";
 import { Player } from "../../types/player";
@@ -57,8 +71,17 @@ const StockSelector = ({
   const [playerStocks, setPlayerStocks] = useState([0, 0, 0, 0, 0]);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   let updatedLogs = [...logs];
   let updatedStockPrices = [...stockPrices];
+
+  const handleOpenClick = () => {
+    setOpen(true);
+  };
+
+  const handleCloseClick = () => {
+    setOpen(false);
+  };
 
   const handleClick = async () => {
     setIsLoading(true);
@@ -111,7 +134,11 @@ const StockSelector = ({
     setIsLoading(false);
   };
 
-  const validateTrade = (stocks: number[], player: Player, updatedStockPrices: number[]) => {
+  const validateTrade = (
+    stocks: number[],
+    player: Player,
+    updatedStockPrices: number[]
+  ) => {
     let sum = 0;
 
     for (let i = 0; i < 5; i++) {
@@ -259,11 +286,57 @@ const StockSelector = ({
       <Button
         variant="contained"
         sx={{ margin: "16px" }}
-        onClick={handleClick}
+        onClick={handleOpenClick}
         className="button"
       >
         {isLoading ? <CircularProgress color="inherit" size={24} /> : "決定"}
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleCloseClick}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          以下の内容で取引を行いますか？
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <TableContainer component={Paper}>
+              <Table>
+                <TableBody>
+                  {playerStocks.map((stock, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{stockName[index]}</TableCell>
+                      <TableCell>
+                        {stock > 0
+                          ? `${stock}株買い`
+                          : stock < 0
+                          ? `${-stock}株売り`
+                          : "なし"}
+                      </TableCell>
+                      <TableCell>
+                        {stock > 0
+                          ? priceArray[stockPrices[index] - 1]
+                          : stock < 0
+                          ? priceArray[stockPrices[index]]
+                          : "0"}
+                        万円
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseClick}>キャンセル</Button>
+          <Button onClick={handleClick} autoFocus>
+            決定
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
