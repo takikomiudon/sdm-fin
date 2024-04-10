@@ -1,5 +1,19 @@
 import React, { useState } from "react";
-import { Button, CircularProgress } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@mui/material";
 import StockSelectButton from "./StockSelectButton";
 import claude from "../../claude/claude";
 import { Player } from "../../types/player";
@@ -12,6 +26,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ComputerIcon from "@mui/icons-material/Computer";
 import PsychologyIcon from "@mui/icons-material/Psychology";
 import { Log } from "../../types/log";
+import { useSnackbar } from "notistack";
 
 const StockSelector = ({
   player1,
@@ -57,10 +72,27 @@ const StockSelector = ({
   const [playerStocks, setPlayerStocks] = useState([0, 0, 0, 0, 0]);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   let updatedLogs = [...logs];
   let updatedStockPrices = [...stockPrices];
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleClick = async () => {
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSnackbar = (message: string) => {
+    enqueueSnackbar(message, {
+      variant: "info",
+    });
+  };
+
+  const handleSubmit = async () => {
+    setOpen(false);
     setIsLoading(true);
     setMessage("");
 
@@ -114,7 +146,11 @@ const StockSelector = ({
     setIsLoading(false);
   };
 
-  const validateTrade = (stocks: number[], player: Player, updatedStockPrices: number[]) => {
+  const validateTrade = (
+    stocks: number[],
+    player: Player,
+    updatedStockPrices: number[]
+  ) => {
     let sum = 0;
     let total_stocks = 0;
 
@@ -213,6 +249,14 @@ const StockSelector = ({
         });
       }
 
+      for (let i = 0; i < 5; i++) {
+        if (stocks[i] !== 0) {
+          handleSnackbar(
+            `${player.name}が${stockName[i]}を${stocks[i]}${stocks[i] > 0 ? "株買い" : "株売り"}ました`
+          );
+        }
+      }
+
       setPlayer(updatedPlayer);
     } catch (error) {
       console.error(error);
@@ -288,11 +332,57 @@ const StockSelector = ({
       <Button
         variant="contained"
         sx={{ margin: "16px" }}
-        onClick={handleClick}
+        onClick={handleOpen}
         className="button"
       >
         {isLoading ? <CircularProgress color="inherit" size={24} /> : "決定"}
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          以下の内容で取引を行いますか？
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <TableContainer component={Paper}>
+              <Table>
+                <TableBody>
+                  {playerStocks.map((stock, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{stockName[index]}</TableCell>
+                      <TableCell>
+                        {stock > 0
+                          ? `${stock}株買い`
+                          : stock < 0
+                          ? `${-stock}株売り`
+                          : "なし"}
+                      </TableCell>
+                      <TableCell>
+                        {stock > 0
+                          ? priceArray[stockPrices[index] - 1]
+                          : stock < 0
+                          ? priceArray[stockPrices[index]]
+                          : "0"}
+                        万円
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>キャンセル</Button>
+          <Button onClick={handleSubmit} autoFocus>
+            決定
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
