@@ -9,6 +9,7 @@ import Logs from "./components/log/Logs";
 import Start from "./components/start/Start";
 import { Log } from "./types/log";
 import AlertDialog from "./components/alertDialog/AlertDialog";
+import { SnackbarProvider } from "notistack";
 
 function App() {
   const initialPlayerState = (name: string) => {
@@ -35,50 +36,52 @@ function App() {
   const [logs, setLogs] = useState<Log[]>([]);
 
   return (
-    <div className="text-center bg-gray-800 text-white flex flex-row h-screen">
-      {year === 4 && period === 1 ? <AlertDialog /> : null}
-      <Start />
-      <StockPriceChart stockPrices={stockPrices} />
-      <div className="flex flex-col justify-evenly">
-        <GameYearAndPeriod year={year} period={period} />
-        <PlayerInfoList
+    <SnackbarProvider maxSnack={5}>
+      <div className="text-center bg-gray-800 text-white flex flex-row h-screen">
+        {year === 4 && period === 1 ? <AlertDialog /> : null}
+        <Start />
+        <StockPriceChart stockPrices={stockPrices} />
+        <div className="flex flex-col justify-evenly">
+          <GameYearAndPeriod year={year} period={period} />
+          <PlayerInfoList
+            player1={player1}
+            player2={player2}
+            player3={player3}
+            player4={player4}
+          />
+          <Event eventNum={eventNum} />
+          <StockSelector
+            player1={player1}
+            player2={player2}
+            player3={player3}
+            player4={player4}
+            stockPrices={stockPrices}
+            setPlayer1={setPlayer1}
+            setPlayer2={setPlayer2}
+            setPlayer3={setPlayer3}
+            setPlayer4={setPlayer4}
+            setStockPrices={setStockPrices}
+            year={year}
+            setYear={setYear}
+            period={period}
+            setPeriod={setPeriod}
+            setIsFinished={setIsFinished}
+            logs={logs}
+            setLogs={setLogs}
+            eventNum={eventNum}
+            setEventNum={setEventNum}
+          />
+        </div>
+        <Logs logs={logs} />
+        <Result
           player1={player1}
           player2={player2}
           player3={player3}
           player4={player4}
-        />
-        <Event eventNum={eventNum} />
-        <StockSelector
-          player1={player1}
-          player2={player2}
-          player3={player3}
-          player4={player4}
-          stockPrices={stockPrices}
-          setPlayer1={setPlayer1}
-          setPlayer2={setPlayer2}
-          setPlayer3={setPlayer3}
-          setPlayer4={setPlayer4}
-          setStockPrices={setStockPrices}
-          year={year}
-          setYear={setYear}
-          period={period}
-          setPeriod={setPeriod}
-          setIsFinished={setIsFinished}
-          logs={logs}
-          setLogs={setLogs}
-          eventNum={eventNum}
-          setEventNum={setEventNum}
+          isFinished={isFinished}
         />
       </div>
-      <Logs logs={logs} />
-      <Result
-        player1={player1}
-        player2={player2}
-        player3={player3}
-        player4={player4}
-        isFinished={isFinished}
-      />
-    </div>
+    </SnackbarProvider>
   );
 }
 

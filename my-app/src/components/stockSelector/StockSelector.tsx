@@ -26,6 +26,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ComputerIcon from "@mui/icons-material/Computer";
 import PsychologyIcon from "@mui/icons-material/Psychology";
 import { Log } from "../../types/log";
+import { useSnackbar } from "notistack";
 
 const StockSelector = ({
   player1,
@@ -74,16 +75,24 @@ const StockSelector = ({
   const [open, setOpen] = useState(false);
   let updatedLogs = [...logs];
   let updatedStockPrices = [...stockPrices];
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleOpenClick = () => {
+  const handleOpen = () => {
     setOpen(true);
   };
 
-  const handleCloseClick = () => {
+  const handleClose = () => {
     setOpen(false);
   };
 
-  const handleClick = async () => {
+  const handleSnackbar = (message: string) => {
+    enqueueSnackbar(message, {
+      variant: "info",
+    });
+  };
+
+  const handleSubmit = async () => {
+    setOpen(false);
     setIsLoading(true);
     setMessage("");
 
@@ -230,6 +239,14 @@ const StockSelector = ({
         });
       }
 
+      for (let i = 0; i < 5; i++) {
+        if (stocks[i] !== 0) {
+          handleSnackbar(
+            `${player.name}が${stockName[i]}を${stocks[i]}${stocks[i] > 0 ? "株買い" : "株売り"}ました`
+          );
+        }
+      }
+
       setPlayer(updatedPlayer);
     } catch (error) {
       console.error(error);
@@ -286,14 +303,14 @@ const StockSelector = ({
       <Button
         variant="contained"
         sx={{ margin: "16px" }}
-        onClick={handleOpenClick}
+        onClick={handleOpen}
         className="button"
       >
         {isLoading ? <CircularProgress color="inherit" size={24} /> : "決定"}
       </Button>
       <Dialog
         open={open}
-        onClose={handleCloseClick}
+        onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -331,8 +348,8 @@ const StockSelector = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseClick}>キャンセル</Button>
-          <Button onClick={handleClick} autoFocus>
+          <Button onClick={handleClose}>キャンセル</Button>
+          <Button onClick={handleSubmit} autoFocus>
             決定
           </Button>
         </DialogActions>
