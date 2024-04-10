@@ -17,8 +17,18 @@ const StockSelectButton = ({
   const getNewStock = (isBuy: boolean) => {
     return stocks.map((stock: number, index: number) => {
       if (index === stockId) {
+        let max_stock = 5;
+        for (let i = 0; i < 5; i++) {
+          if (i === index) {
+            continue;
+          }
+          max_stock -= Math.abs(stocks[i]);
+        }
         const newStock = stock + (isBuy ? 1 : -1);
-        return Math.max(-5, Math.min(5, newStock));
+        return Math.max(
+          Math.max(-5, -max_stock),
+          Math.min(max_stock, newStock)
+        );
       }
       return stock;
     });
