@@ -6,12 +6,8 @@ import { Player } from "../../types/player";
 import events from "../../data/events";
 import priceArray from "../../data/priceArray";
 import stockName from "../../data/stockName";
-import ScienceIcon from "@mui/icons-material/Science";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import ComputerIcon from "@mui/icons-material/Computer";
-import PsychologyIcon from "@mui/icons-material/Psychology";
 import { Log } from "../../types/log";
+import StockIcon from "../icons/StockIcon";
 
 const StockSelector = ({
   player1,
@@ -111,7 +107,11 @@ const StockSelector = ({
     setIsLoading(false);
   };
 
-  const validateTrade = (stocks: number[], player: Player, updatedStockPrices: number[]) => {
+  const validateTrade = (
+    stocks: number[],
+    player: Player,
+    updatedStockPrices: number[]
+  ) => {
     let sum = 0;
 
     for (let i = 0; i < 5; i++) {
@@ -228,31 +228,31 @@ const StockSelector = ({
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={0}
-          icon={<ScienceIcon />}
+          icon={<StockIcon id={0} />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={1}
-          icon={<AccountBalanceWalletIcon />}
+          icon={<StockIcon id={1} />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={2}
-          icon={<LocalShippingIcon />}
+          icon={<StockIcon id={2} />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={3}
-          icon={<ComputerIcon />}
+          icon={<StockIcon id={3} />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={4}
-          icon={<PsychologyIcon />}
+          icon={<StockIcon id={4} />}
         />
       </div>
       <div className="message">{message}</div>
