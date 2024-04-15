@@ -359,9 +359,9 @@ const StockSelector = ({
                       </TableCell>
                       <TableCell>
                         {stock > 0
-                          ? priceArray[stockPrices[index] - 1]
-                          : stock < 0
                           ? priceArray[stockPrices[index]]
+                          : stock < 0
+                          ? priceArray[stockPrices[index] + 1]
                           : "0"}
                         万円
                       </TableCell>
