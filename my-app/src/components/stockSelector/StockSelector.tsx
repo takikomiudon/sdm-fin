@@ -151,11 +151,11 @@ const StockSelector = ({
     let total_stocks = 0;
 
     for (let i = 0; i < 5; i++) {
-      if(stocks[i]>0){
-        sum += priceArray[updatedStockPrices[i] ] * stocks[i];
-      }else if(stocks[i]<0){
-        sum += priceArray[updatedStockPrices[i]+ 1] * stocks[i];
-      }
+      sum +=
+        stocks[i] *
+        (stocks[i] > 0
+          ? priceArray[updatedStockPrices[i]]
+          : priceArray[updatedStockPrices[i] + 1]);
       total_stocks += Math.abs(stocks[i]);
     }
 
@@ -246,7 +246,9 @@ const StockSelector = ({
       for (let i = 0; i < 5; i++) {
         if (stocks[i] !== 0) {
           handleSnackbar(
-            `${player.name}が${stockName[i]}を${stocks[i]}${stocks[i] > 0 ? "株買い" : "株売り"}ました`
+            `${player.name}が${stockName[i]}を${Math.abs(stocks[i])}株${
+              stocks[i] > 0 ? "買い" : "売り"
+            }ました`
           );
         }
       }
@@ -325,7 +327,15 @@ const StockSelector = ({
       <div className="message">{message}</div>
       <Button
         variant="contained"
-        sx={{ margin: "16px" }}
+        sx={{
+          margin: "16px",
+          backgroundColor: "white",
+          color: "blue",
+          "&:hover": {
+            backgroundColor: "blue",
+            color: "white",
+          },
+        }}
         onClick={handleOpen}
         className="button"
       >
