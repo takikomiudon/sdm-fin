@@ -151,12 +151,10 @@ const StockSelector = ({
     let total_stocks = 0;
 
     for (let i = 0; i < 5; i++) {
-      for (let j = 0; j < Math.abs(stocks[i]); j++) {
-        if (stocks[i] > 0) {
-          sum += priceArray[updatedStockPrices[i] - j];
-        } else if (stocks[i] < 0) {
-          sum -= priceArray[updatedStockPrices[i] + 1 + j];
-        }
+      if(stocks[i]>0){
+        sum += priceArray[updatedStockPrices[i] ] * stocks[i];
+      }else if(stocks[i]<0){
+        sum += priceArray[updatedStockPrices[i]+ 1] * stocks[i];
       }
       total_stocks += Math.abs(stocks[i]);
     }
