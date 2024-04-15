@@ -71,6 +71,11 @@ const StockSelector = ({
   const [open, setOpen] = useState(false);
   let updatedLogs = [...logs];
   let updatedStockPrices = [...stockPrices];
+  let updatedPlayer1 = JSON.parse(JSON.stringify(player1));
+  let updatedPlayer2 = JSON.parse(JSON.stringify(player2));
+  let updatedPlayer3 = JSON.parse(JSON.stringify(player3));
+  let updatedPlayer4 = JSON.parse(JSON.stringify(player4));
+  let updatedPlayers = [updatedPlayer1, updatedPlayer2, updatedPlayer3, updatedPlayer4];
   const { enqueueSnackbar } = useSnackbar();
 
   const handleOpen = () => {
@@ -102,7 +107,7 @@ const StockSelector = ({
       setIsLoading(false);
       return;
     }
-    trade(playerStocks, player1, setPlayer1);
+    trade(playerStocks, 0);
     initialTrade();
 
     let claudeStocks = await claude(
@@ -116,7 +121,7 @@ const StockSelector = ({
       claudeStocks = [0, 0, 0, 0, 0];
       setIsLoading(false);
     }
-    trade(claudeStocks, player2, setPlayer2);
+    trade(claudeStocks, 1);
 
     setLogs(updatedLogs);
 
@@ -129,13 +134,18 @@ const StockSelector = ({
     } else if (period === 4) {
       setYear(year + 1);
       setPeriod(1);
-      dividend(player1, setPlayer1);
-      dividend(player2, setPlayer2);
-      dividend(player3, setPlayer3);
-      dividend(player4, setPlayer4);
+      dividend(0);
+      dividend(1);
+      dividend(2);
+      dividend(3);
     } else {
       setPeriod(period + 1);
     }
+
+    setPlayer1(updatedPlayer1);
+    setPlayer2(updatedPlayer2);
+    setPlayer3(updatedPlayer3);
+    setPlayer4(updatedPlayer4);
 
     setEventNum(eventNum + 1);
 
@@ -205,11 +215,10 @@ const StockSelector = ({
 
   const trade = (
     stocks: number[],
-    player: Player,
-    setPlayer: React.Dispatch<React.SetStateAction<Player>>
+    id: number
   ) => {
     try {
-      let updatedPlayer = JSON.parse(JSON.stringify(player));
+      let updatedPlayer = updatedPlayers[id];
       updatedLogs[updatedLogs.length - 1].logs.push({
         playerName: updatedPlayer.name,
         logs: [],
@@ -246,14 +255,12 @@ const StockSelector = ({
       for (let i = 0; i < 5; i++) {
         if (stocks[i] !== 0) {
           handleSnackbar(
-            `${player.name}が${stockName[i]}を${Math.abs(stocks[i])}株${
+            `${updatedPlayer.name}が${stockName[i]}を${Math.abs(stocks[i])}株${
               stocks[i] > 0 ? "買い" : "売り"
             }ました`
           );
         }
       }
-
-      setPlayer(updatedPlayer);
     } catch (error) {
       console.error(error);
     }
@@ -272,8 +279,7 @@ const StockSelector = ({
   };
 
   const dividend = (
-    player: Player,
-    setPlayer: React.Dispatch<React.SetStateAction<Player>>
+    id: number
   ) => {
     let multiple = [];
     if (year === 1) {
@@ -286,9 +292,8 @@ const StockSelector = ({
       multiple = [0, 0, 0, 0, 0];
     }
     for (let i = 0; i < 5; i++) {
-      player.money += player.stocks[i] * multiple[i];
+      updatedPlayers[id].money += updatedPlayers[id].stocks[i] * multiple[i];
     }
-    setPlayer(player);
   };
   return (
     <div className="StockSelector">
