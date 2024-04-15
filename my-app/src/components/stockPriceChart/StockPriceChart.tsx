@@ -1,10 +1,6 @@
 import React from "react";
 import priceArray from "../../data/priceArray";
-import ScienceIcon from '@mui/icons-material/Science';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import ComputerIcon from '@mui/icons-material/Computer';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import StockIcon from "../icons/StockIcon";
 
 const StockPriceChart = ({ stockPrices }: { stockPrices: number[] }) => {
   const isCurrentPrice = (index: number, stock: number) => {
@@ -32,11 +28,21 @@ const StockPriceChart = ({ stockPrices }: { stockPrices: number[] }) => {
       <table className="w-96 mx-10 mt-0 mb-auto">
         <thead>
           <tr>
-            <th><ScienceIcon /></th>
-            <th><AccountBalanceWalletIcon /></th>
-            <th><LocalShippingIcon /></th>
-            <th><ComputerIcon /></th>
-            <th><PsychologyIcon /></th>
+            <th>
+              <StockIcon id={0} />
+            </th>
+            <th>
+              <StockIcon id={1} />
+            </th>
+            <th>
+              <StockIcon id={2} />
+            </th>
+            <th>
+              <StockIcon id={3} />
+            </th>
+            <th>
+              <StockIcon id={4} />
+            </th>
           </tr>
         </thead>
         <tbody>

@@ -1,17 +1,28 @@
 import React, { useState } from "react";
-import { Button, CircularProgress } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@mui/material";
 import StockSelectButton from "./StockSelectButton";
 import claude from "../../claude/claude";
 import { Player } from "../../types/player";
 import events from "../../data/events";
 import priceArray from "../../data/priceArray";
 import stockName from "../../data/stockName";
-import ScienceIcon from "@mui/icons-material/Science";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import ComputerIcon from "@mui/icons-material/Computer";
-import PsychologyIcon from "@mui/icons-material/Psychology";
 import { Log } from "../../types/log";
+import StockIcon from "../icons/StockIcon";
+import { useSnackbar } from "notistack";
 
 const StockSelector = ({
   player1,
@@ -57,10 +68,27 @@ const StockSelector = ({
   const [playerStocks, setPlayerStocks] = useState([0, 0, 0, 0, 0]);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   let updatedLogs = [...logs];
   let updatedStockPrices = [...stockPrices];
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleClick = async () => {
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSnackbar = (message: string) => {
+    enqueueSnackbar(message, {
+      variant: "info",
+    });
+  };
+
+  const handleSubmit = async () => {
+    setOpen(false);
     setIsLoading(true);
     setMessage("");
 
@@ -101,7 +129,10 @@ const StockSelector = ({
     } else if (period === 4) {
       setYear(year + 1);
       setPeriod(1);
-      // TODO 配当金の実装
+      dividend(player1, setPlayer1);
+      dividend(player2, setPlayer2);
+      dividend(player3, setPlayer3);
+      dividend(player4, setPlayer4);
     } else {
       setPeriod(period + 1);
     }
@@ -111,17 +142,21 @@ const StockSelector = ({
     setIsLoading(false);
   };
 
-  const validateTrade = (stocks: number[], player: Player, updatedStockPrices: number[]) => {
+  const validateTrade = (
+    stocks: number[],
+    player: Player,
+    updatedStockPrices: number[]
+  ) => {
     let sum = 0;
+    let total_stocks = 0;
 
     for (let i = 0; i < 5; i++) {
-      for (let j = 0; j < Math.abs(stocks[i]); j++) {
-        if (stocks[i] > 0) {
-          sum += priceArray[updatedStockPrices[i] - j];
-        } else if (stocks[i] < 0) {
-          sum -= priceArray[updatedStockPrices[i] + 1 + j];
-        }
-      }
+      sum +=
+        stocks[i] *
+        (stocks[i] > 0
+          ? priceArray[updatedStockPrices[i]]
+          : priceArray[updatedStockPrices[i] + 1]);
+      total_stocks += Math.abs(stocks[i]);
     }
 
     if (sum > player.money) {
@@ -153,6 +188,14 @@ const StockSelector = ({
       }
     }
 
+    if (total_stocks > 5) {
+      if (player.name === "あなた") {
+        setMessage("売買株数は合計5株以下にしてください");
+      } else {
+        console.log("売買株数は合計5株以下にしてください");
+      }
+      return false;
+    }
     return true;
   };
 
@@ -183,10 +226,7 @@ const StockSelector = ({
         stock = isBuy ? stock : -stock;
 
         let dealingPrice = 0;
-        for (let j = 0; j < stock; j++) {
-          dealingPrice +=
-            priceArray[stockPrices[i] + (isBuy ? 0 : 1) + (isBuy ? -j : j)];
-        }
+        dealingPrice += priceArray[stockPrices[i] + (isBuy ? 0 : 1)] * stock;
 
         updatedPlayer.money += (isBuy ? -1 : 1) * dealingPrice;
         updatedPlayer.stocks[i] += isBuy ? stock : -stock;
@@ -201,6 +241,16 @@ const StockSelector = ({
           price: dealingPrice,
           quantity: stock,
         });
+      }
+
+      for (let i = 0; i < 5; i++) {
+        if (stocks[i] !== 0) {
+          handleSnackbar(
+            `${player.name}が${stockName[i]}を${Math.abs(stocks[i])}株${
+              stocks[i] > 0 ? "買い" : "売り"
+            }ました`
+          );
+        }
       }
 
       setPlayer(updatedPlayer);
@@ -221,6 +271,25 @@ const StockSelector = ({
     }
   };
 
+  const dividend = (
+    player: Player,
+    setPlayer: React.Dispatch<React.SetStateAction<Player>>
+  ) => {
+    let multiple = [];
+    if (year === 1) {
+      multiple = [20, 0, 10, 30, 0];
+    } else if (year === 2) {
+      multiple = [20, 20, 20, 30, 0];
+    } else if (year === 3) {
+      multiple = [20, 0, 10, 20, 0];
+    } else {
+      multiple = [0, 0, 0, 0, 0];
+    }
+    for (let i = 0; i < 5; i++) {
+      player.money += player.stocks[i] * multiple[i];
+    }
+    setPlayer(player);
+  };
   return (
     <div className="StockSelector">
       <div className="flex flex-row justify-evenly">
@@ -228,31 +297,31 @@ const StockSelector = ({
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={0}
-          icon={<ScienceIcon />}
+          icon={<StockIcon id={0} />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={1}
-          icon={<AccountBalanceWalletIcon />}
+          icon={<StockIcon id={1} />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={2}
-          icon={<LocalShippingIcon />}
+          icon={<StockIcon id={2} />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={3}
-          icon={<ComputerIcon />}
+          icon={<StockIcon id={3} />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={4}
-          icon={<PsychologyIcon />}
+          icon={<StockIcon id={4} />}
         />
       </div>
       <div className="message">{message}</div>
@@ -267,11 +336,57 @@ const StockSelector = ({
             color: "white",
           },
         }}
-        onClick={handleClick}
+        onClick={handleOpen}
         className="button"
       >
         {isLoading ? <CircularProgress color="inherit" size={24} /> : "決定"}
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          以下の内容で取引を行いますか？
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <TableContainer component={Paper}>
+              <Table>
+                <TableBody>
+                  {playerStocks.map((stock, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{stockName[index]}</TableCell>
+                      <TableCell>
+                        {stock > 0
+                          ? `${stock}株買い`
+                          : stock < 0
+                          ? `${-stock}株売り`
+                          : "なし"}
+                      </TableCell>
+                      <TableCell>
+                        {stock > 0
+                          ? priceArray[stockPrices[index]] * stock
+                          : stock < 0
+                          ? priceArray[stockPrices[index] + 1] * stock
+                          : "0"}
+                        万円
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>キャンセル</Button>
+          <Button onClick={handleSubmit} autoFocus>
+            決定
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
