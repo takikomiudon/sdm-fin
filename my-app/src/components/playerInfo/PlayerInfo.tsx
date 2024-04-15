@@ -4,7 +4,7 @@ import { Player } from "../../types/player";
 
 const PlayerInfo = ({ player }: { player: Player }) => {
   return (
-    <tr>
+    <tr style={player.name === "あなた" ? { backgroundColor: "#35599c" } : {}}>
       <td>
         <img src={logo} className="h-12" alt="logo" />
       </td>
