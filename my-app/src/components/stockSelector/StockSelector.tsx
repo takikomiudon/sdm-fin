@@ -151,13 +151,11 @@ const StockSelector = ({
     let total_stocks = 0;
 
     for (let i = 0; i < 5; i++) {
-      for (let j = 0; j < Math.abs(stocks[i]); j++) {
-        if (stocks[i] > 0) {
-          sum += priceArray[updatedStockPrices[i] - j];
-        } else if (stocks[i] < 0) {
-          sum -= priceArray[updatedStockPrices[i] + 1 + j];
-        }
-      }
+      sum +=
+        stocks[i] *
+        (stocks[i] > 0
+          ? priceArray[updatedStockPrices[i]]
+          : priceArray[updatedStockPrices[i] + 1]);
       total_stocks += Math.abs(stocks[i]);
     }
 
@@ -248,7 +246,9 @@ const StockSelector = ({
       for (let i = 0; i < 5; i++) {
         if (stocks[i] !== 0) {
           handleSnackbar(
-            `${player.name}が${stockName[i]}を${stocks[i]}${stocks[i] > 0 ? "株買い" : "株売り"}ました`
+            `${player.name}が${stockName[i]}を${stocks[i]}${
+              stocks[i] > 0 ? "株買い" : "株売り"
+            }ました`
           );
         }
       }
