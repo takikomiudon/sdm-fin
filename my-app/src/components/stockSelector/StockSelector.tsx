@@ -246,8 +246,8 @@ const StockSelector = ({
       for (let i = 0; i < 5; i++) {
         if (stocks[i] !== 0) {
           handleSnackbar(
-            `${player.name}が${stockName[i]}を${stocks[i]}${
-              stocks[i] > 0 ? "株買い" : "株売り"
+            `${player.name}が${stockName[i]}を${stocks[i]}株${
+              stocks[i] > 0 ? "買い" : "売り"
             }ました`
           );
         }
