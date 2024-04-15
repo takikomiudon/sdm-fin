@@ -258,7 +258,15 @@ const StockSelector = ({
       <div className="message">{message}</div>
       <Button
         variant="contained"
-        sx={{ margin: "16px" }}
+        sx={{ 
+          margin: "16px",
+          backgroundColor: 'white',
+          color: 'blue',
+          '&:hover': {
+            backgroundColor: 'blue',
+            color: 'white',
+          }
+        }}
         onClick={handleClick}
         className="button"
       >

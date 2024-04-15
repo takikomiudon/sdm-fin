@@ -31,7 +31,7 @@ const StockSelectButton = ({
         <AddIcon />
       </Button>
       <span>{stocks[stockId]}</span>
-      <Button variant="contained" onClick={() => setStocks(getNewStock(false))}>
+      <Button variant="contained" color="red" onClick={() => setStocks(getNewStock(false))}>
         <RemoveIcon />
       </Button>
     </div>
