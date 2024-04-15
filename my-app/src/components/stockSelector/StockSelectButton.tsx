@@ -31,7 +31,11 @@ const StockSelectButton = ({
         <AddIcon />
       </Button>
       <span>{stocks[stockId]}</span>
-      <Button variant="contained" color="error" onClick={() => setStocks(getNewStock(false))}>
+      <Button
+        variant="contained"
+        color="error"
+        onClick={() => setStocks(getNewStock(false))}
+      >
         <RemoveIcon />
       </Button>
     </div>
