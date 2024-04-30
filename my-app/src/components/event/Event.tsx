@@ -2,7 +2,13 @@ import React from "react";
 import events from "../../data/events";
 import StockIcon from "../icons/StockIcon";
 
-const Event = ({ eventNum, eventOrder }: { eventNum: number , eventOrder:number[]}) => {
+const Event = ({
+  eventNum,
+  eventOrder,
+}: {
+  eventNum: number;
+  eventOrder: number[];
+}) => {
   if (eventNum > 15) {
     return null;
   }
