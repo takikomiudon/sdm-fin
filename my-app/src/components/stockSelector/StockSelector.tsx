@@ -44,6 +44,7 @@ const StockSelector = ({
   setLogs,
   eventNum,
   setEventNum,
+  eventOrder
 }: {
   player1: Player;
   setPlayer1: React.Dispatch<React.SetStateAction<Player>>;
@@ -64,6 +65,7 @@ const StockSelector = ({
   setLogs: React.Dispatch<React.SetStateAction<Log[]>>;
   eventNum: number;
   setEventNum: React.Dispatch<React.SetStateAction<number>>;
+  eventOrder: number[]
 }) => {
   const [playerStocks, setPlayerStocks] = useState([0, 0, 0, 0, 0]);
   const [message, setMessage] = useState("");
@@ -108,7 +110,7 @@ const StockSelector = ({
     let claudeStocks = await claude(
       stockPrices,
       player2,
-      events[eventNum].effect,
+      events[eventOrder[eventNum]].effect,
       year,
       period
     );
@@ -261,12 +263,12 @@ const StockSelector = ({
 
   const event = () => {
     for (let i = 0; i < 5; i++) {
-      if (updatedStockPrices[i] - events[eventNum].effect[i] < 0) {
+      if (updatedStockPrices[i] - events[eventOrder[eventNum]].effect[i] < 0) {
         updatedStockPrices[i] = 0;
-      } else if (updatedStockPrices[i] - events[eventNum].effect[i] > 19) {
+      } else if (updatedStockPrices[i] - events[eventOrder[eventNum]].effect[i] > 19) {
         updatedStockPrices[i] = 19;
       } else {
-        updatedStockPrices[i] -= events[eventNum].effect[i];
+        updatedStockPrices[i] -= events[eventOrder[eventNum]].effect[i];
       }
     }
   };
