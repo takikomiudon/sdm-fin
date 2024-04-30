@@ -61,7 +61,9 @@ function App() {
             player3={player3}
             player4={player4}
           />
-          <Event eventNum={eventOrder[eventNum]} />
+          <Event 
+            eventNum={eventNum}
+            eventOrder={eventOrder} />
           <StockSelector
             player1={player1}
             player2={player2}
