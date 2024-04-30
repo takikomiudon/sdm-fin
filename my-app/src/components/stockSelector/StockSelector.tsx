@@ -75,7 +75,12 @@ const StockSelector = ({
   let updatedPlayer2 = JSON.parse(JSON.stringify(player2));
   let updatedPlayer3 = JSON.parse(JSON.stringify(player3));
   let updatedPlayer4 = JSON.parse(JSON.stringify(player4));
-  let updatedPlayers = [updatedPlayer1, updatedPlayer2, updatedPlayer3, updatedPlayer4];
+  let updatedPlayers = [
+    updatedPlayer1,
+    updatedPlayer2,
+    updatedPlayer3,
+    updatedPlayer4,
+  ];
   const { enqueueSnackbar } = useSnackbar();
 
   const handleOpen = () => {
@@ -110,24 +115,29 @@ const StockSelector = ({
     trade(playerStocks, 0);
     initialTrade();
 
-    let claudeStocks = await claude(
-      stockPrices,
-      player2,
-      events[eventNum].effect,
-      year,
-      period
-    );
-    if (!validateTrade(claudeStocks, player2, updatedStockPrices)) {
-      claudeStocks = [0, 0, 0, 0, 0];
-      setIsLoading(false);
+    let [claudeStocks1, claudeStocks2, claudeStocks3] = await Promise.all([
+      claude(stockPrices, player2, events[eventNum].effect, year, period),
+      claude(stockPrices, player3, events[eventNum].effect, year, period),
+      claude(stockPrices, player4, events[eventNum].effect, year, period),
+    ]);
+
+    const players = [player2, player3, player4];
+    const claudeStocks = [claudeStocks1, claudeStocks2, claudeStocks3];
+
+    for (let i = 0; i < 3; i++) {
+      if (!validateTrade(claudeStocks[i], players[i], updatedStockPrices)) {
+        claudeStocks[i] = [0, 0, 0, 0, 0];
+        setIsLoading(false);
+      }
+
+      trade(claudeStocks[i], i + 1);
+
+      setLogs(updatedLogs);
+
+      event();
+
+      setStockPrices(updatedStockPrices);
     }
-    trade(claudeStocks, 1);
-
-    setLogs(updatedLogs);
-
-    event();
-
-    setStockPrices(updatedStockPrices);
 
     if (year === 4 && period === 4) {
       setIsFinished(true);
@@ -213,10 +223,7 @@ const StockSelector = ({
     setPlayerStocks([0, 0, 0, 0, 0]);
   };
 
-  const trade = (
-    stocks: number[],
-    id: number
-  ) => {
+  const trade = (stocks: number[], id: number) => {
     try {
       let updatedPlayer = updatedPlayers[id];
       updatedLogs[updatedLogs.length - 1].logs.push({
@@ -278,9 +285,7 @@ const StockSelector = ({
     }
   };
 
-  const dividend = (
-    id: number
-  ) => {
+  const dividend = (id: number) => {
     let multiple = [];
     if (year === 1) {
       multiple = [20, 0, 10, 30, 0];
