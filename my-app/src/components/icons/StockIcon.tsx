@@ -1,7 +1,6 @@
 import React from "react";
 import {
   styled,
-  Table,
   Tooltip,
   tooltipClasses,
   TooltipProps,
@@ -30,13 +29,13 @@ const StockIcon = ({ id }: { id: number }) => {
     "今後の成長が見込まれる",
   ];
   const dividends = [
-    [20, 20, 20, 0],  // 物質・材料開発機構
-    [0, 20, 0, 0],  // SIBC
-    [10, 20, 10, 0],  // システム物流
-    [30, 30, 20, 0],  // シミュレーションLab
-    [0, 0, 0, 0]   // 株式会社松井研究所
+    [20, 20, 20, 0], // 物質・材料開発機構
+    [0, 20, 0, 0], // SIBC
+    [10, 20, 10, 0], // システム物流
+    [30, 30, 20, 0], // シミュレーションLab
+    [0, 0, 0, 0], // 株式会社松井研究所
   ];
-  
+
   const icons = [
     <ScienceIcon />,
     <AccountBalanceWalletIcon />,
@@ -66,10 +65,8 @@ const StockIcon = ({ id }: { id: number }) => {
         <React.Fragment>
           <Typography color="inherit">{names[id]}</Typography>
           <em>{descriptions[id]}</em>
-          <Table>
-            <tr>
-              配当金
-            </tr>
+          <table>
+            <tr>配当金</tr>
             <tr>
               <td>1年目</td>
               <td>2年目</td>
@@ -82,7 +79,7 @@ const StockIcon = ({ id }: { id: number }) => {
               <td>{dividends[id][2]}</td>
               <td>{dividends[id][3]}</td>
             </tr>
-          </Table>
+          </table>
         </React.Fragment>
       }
     >
@@ -92,4 +89,3 @@ const StockIcon = ({ id }: { id: number }) => {
 };
 
 export default StockIcon;
-
