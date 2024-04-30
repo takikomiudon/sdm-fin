@@ -302,31 +302,31 @@ const StockSelector = ({
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={0}
-          icon={<StockIcon id={0} />}
+          icon={<StockIcon id={0} size ='60px'/>}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={1}
-          icon={<StockIcon id={1} />}
+          icon={<StockIcon id={1} size ='60px'/>}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={2}
-          icon={<StockIcon id={2} />}
+          icon={<StockIcon id={2} size ='60px'/>}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={3}
-          icon={<StockIcon id={3} />}
+          icon={<StockIcon id={3} size ='60px'/>}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={4}
-          icon={<StockIcon id={4} />}
+          icon={<StockIcon id={4} size ='60px'/>}
         />
       </div>
       <div className="message">{message}</div>
