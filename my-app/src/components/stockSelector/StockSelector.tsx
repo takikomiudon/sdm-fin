@@ -242,7 +242,8 @@ const StockSelector = ({
         stock = isBuy ? stock : -stock;
 
         let dealingPrice = 0;
-        dealingPrice += priceArray[stockPrices[i] + (isBuy ? 0 : 1)] * stock;
+        dealingPrice +=
+          priceArray[updatedStockPrices[i] + (isBuy ? 0 : 1)] * stock;
 
         updatedPlayer.money += (isBuy ? -1 : 1) * dealingPrice;
         updatedPlayer.stocks[i] += isBuy ? stock : -stock;
