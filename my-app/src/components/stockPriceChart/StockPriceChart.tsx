@@ -29,19 +29,19 @@ const StockPriceChart = ({ stockPrices }: { stockPrices: number[] }) => {
         <thead>
           <tr>
             <th>
-              <StockIcon id={0} size='60'/>
+              <StockIcon id={0} size='60px'/>
             </th>
             <th>
-              <StockIcon id={1} size='60' />
+              <StockIcon id={1} size='60px' />
             </th>
             <th>
-              <StockIcon id={2} size='60'/>
+              <StockIcon id={2} size='60px'/>
             </th>
             <th>
-              <StockIcon id={3} size='60'/>
+              <StockIcon id={3} size='60px'/>
             </th>
             <th>
-              <StockIcon id={4} size='60'/>
+              <StockIcon id={4} size='60px'/>
             </th>
           </tr>
         </thead>

@@ -1,8 +1,12 @@
 import React from "react";
-import logo from "./img/logo192.png";
 import { Player } from "../../types/player";
 
-const PlayerInfo = ({ player }: { player: Player }) => {
+interface PlayerInfoProps {
+  player: Player;
+  logo: string;
+}
+
+const PlayerInfo: React.FC<PlayerInfoProps> = ({ player, logo }) => {
   return (
     <tr style={player.name === "あなた" ? { backgroundColor: "#35599c" } : {}}>
       <td>

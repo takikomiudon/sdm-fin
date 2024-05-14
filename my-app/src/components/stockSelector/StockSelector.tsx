@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@mui/material";
 import StockSelectButton from "./StockSelectButton";
-import claude from "../../claude/claude";
+import claude from "../../claude/claude"; 
 import { Player } from "../../types/player";
 import events from "../../data/events";
 import priceArray from "../../data/priceArray";
