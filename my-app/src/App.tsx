@@ -21,6 +21,20 @@ function App() {
       logo: ""
     };
   };
+
+  const arrayShuffle = (array: number[]) => {
+    for (let i = array.length - 1; 0 < i; i--) {
+      let r = Math.floor(Math.random() * (i + 1));
+      let tmp = array[i];
+      array[i] = array[r];
+      array[r] = tmp;
+    }
+    return array;
+  };
+
+  const [eventOrder, setEventOrder] = useState(
+    arrayShuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+  );
   const [player1, setPlayer1] = useState<Player>(initialPlayerState("あなた"));
   const [player2, setPlayer2] = useState<Player>(initialPlayerState("Claude"));
   const [player3, setPlayer3] = useState<Player>(initialPlayerState("CPU1"));
@@ -51,7 +65,7 @@ function App() {
             player3={player3}
             player4={player4}
           />
-          <Event eventNum={eventNum} />
+          <Event eventNum={eventNum} eventOrder={eventOrder} />
           <StockSelector
             player1={player1}
             player2={player2}
@@ -72,6 +86,7 @@ function App() {
             setLogs={setLogs}
             eventNum={eventNum}
             setEventNum={setEventNum}
+            eventOrder={eventOrder}
           />
         </div>
         <Logs logs={logs} />
