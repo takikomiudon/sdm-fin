@@ -10,6 +10,7 @@ import Start from "./components/start/Start";
 import { Log } from "./types/log";
 import AlertDialog from "./components/alertDialog/AlertDialog";
 import { SnackbarProvider } from "notistack";
+import { Player } from "./types/player";
 
 function App() {
   const initialPlayerState = (name: string) => {
@@ -17,6 +18,7 @@ function App() {
       name: name,
       stocks: [0, 0, 0, 0, 0],
       money: 1000,
+      logo: ""
     };
   };
 
@@ -33,10 +35,10 @@ function App() {
   const [eventOrder, setEventOrder] = useState(
     arrayShuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
   );
-  const [player1, setPlayer1] = useState(initialPlayerState("あなた"));
-  const [player2, setPlayer2] = useState(initialPlayerState("Claude"));
-  const [player3, setPlayer3] = useState(initialPlayerState("CPU1"));
-  const [player4, setPlayer4] = useState(initialPlayerState("CPU2"));
+  const [player1, setPlayer1] = useState<Player>(initialPlayerState("あなた"));
+  const [player2, setPlayer2] = useState<Player>(initialPlayerState("Claude"));
+  const [player3, setPlayer3] = useState<Player>(initialPlayerState("CPU1"));
+  const [player4, setPlayer4] = useState<Player>(initialPlayerState("CPU2"));
 
   const [stockPrices, setStockPrices] = useState([15, 15, 15, 15, 15]);
 

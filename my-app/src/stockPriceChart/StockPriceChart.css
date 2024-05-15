@@ -1,0 +1,24 @@
+.chart-container {
+  position: relative;
+}
+
+.chart-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /*background-image: url('/Users/shimomukaikouta/Documents/五月祭関連/sdm-fin/my-app/src/stockPriceChart/Background_StockPriceChart.jpg'); /* 背景画像のパス */
+  background-size: cover;
+  z-index: -1; /* チャートの背後に画像がくるように */
+}
+
+/* StockPriceChart.css */
+.stock-chart-container {
+    /*background-image: url('./white.jpg');*/
+    background-image: url('./Background_StockPriceChart.jpg');
+    background-size: 579px 678px; /*700px 800px;*/ /* このサイズはBarChartコンポーネントのサイズに合わせて調整してください */
+    background-repeat: no-repeat;
+    background-position: center; /* センタリングのために調整 */
+  }
