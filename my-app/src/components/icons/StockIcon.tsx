@@ -7,11 +7,11 @@ import {
   Typography,
   Zoom,
 } from "@mui/material";
-import ScienceIcon from "@mui/icons-material/Science";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import ComputerIcon from "@mui/icons-material/Computer";
-import PsychologyIcon from "@mui/icons-material/Psychology";
+import icon_AI from "./companyIcons/icon_AI.png";
+import icon_logistics from "./companyIcons/icon_logistics.png";
+import icon_material from "./companyIcons/icon_material.png";
+import icon_SIBC from "./companyIcons/icon_SIBC.png";
+import icon_simulation from "./companyIcons/icon_simulation.png";
 
 const StockIcon = ({ id }: { id: number }) => {
   const names = [
@@ -37,11 +37,31 @@ const StockIcon = ({ id }: { id: number }) => {
   ];
 
   const icons = [
-    <ScienceIcon />,
-    <AccountBalanceWalletIcon />,
-    <LocalShippingIcon />,
-    <ComputerIcon />,
-    <PsychologyIcon />,
+    <img
+      src={icon_material}
+      alt="物質・材料開発機構"
+      style={{ width: "40px", height: "40px" }}
+    />,
+    <img
+      src={icon_SIBC}
+      alt="SIBC"
+      style={{ width: "40px", height: "40px" }}
+    />,
+    <img
+      src={icon_logistics}
+      alt="システム物流"
+      style={{ width: "40px", height: "40px" }}
+    />,
+    <img
+      src={icon_simulation}
+      alt="シミュレーションLab"
+      style={{ width: "40px", height: "40px" }}
+    />,
+    <img
+      src={icon_AI}
+      alt="株式会社松井研究所"
+      style={{ width: "40px", height: "40px" }}
+    />,
   ];
   const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip
