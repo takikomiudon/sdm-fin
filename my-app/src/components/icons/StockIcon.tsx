@@ -13,7 +13,7 @@ import icon_material from "./companyIcons/icon_material.png";
 import icon_SIBC from "./companyIcons/icon_SIBC.png";
 import icon_simulation from "./companyIcons/icon_simulation.png";
 
-const StockIcon = ({ id }: { id: number }) => {
+const StockIcon = ({ id, size = "40px" }: { id: number; size?: string }) => {
   const names = [
     "物質・材料開発機構",
     "SIBC",
@@ -40,27 +40,27 @@ const StockIcon = ({ id }: { id: number }) => {
     <img
       src={icon_material}
       alt="物質・材料開発機構"
-      style={{ width: "40px", height: "40px" }}
+      style={{ width: size, height: size }}
     />,
     <img
       src={icon_SIBC}
       alt="SIBC"
-      style={{ width: "40px", height: "40px" }}
+      style={{ width: size, height: size }}
     />,
     <img
       src={icon_logistics}
       alt="システム物流"
-      style={{ width: "40px", height: "40px" }}
+      style={{ width: size, height: size }}
     />,
     <img
       src={icon_simulation}
       alt="シミュレーションLab"
-      style={{ width: "40px", height: "40px" }}
+      style={{ width: size, height: size }}
     />,
     <img
       src={icon_AI}
       alt="株式会社松井研究所"
-      style={{ width: "40px", height: "40px" }}
+      style={{ width: size, height: size }}
     />,
   ];
   const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
