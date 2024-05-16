@@ -117,24 +117,29 @@ const StockSelector = ({
     trade(playerStocks, 0);
     initialTrade();
 
-    let claudeStocks = await claude(
-      stockPrices,
-      player2,
-      events[eventOrder[eventNum]],
-      year,
-      period
-    );
-    if (!validateTrade(claudeStocks, player2, updatedStockPrices)) {
-      claudeStocks = [0, 0, 0, 0, 0];
-      setIsLoading(false);
+    let [claudeStocks1, claudeStocks2, claudeStocks3] = await Promise.all([
+      claude(stockPrices, player2, events[eventNum], year, period),
+      claude(stockPrices, player3, events[eventNum], year, period),
+      claude(stockPrices, player4, events[eventNum], year, period),
+    ]);
+
+    const players = [player2, player3, player4];
+    const claudeStocks = [claudeStocks1, claudeStocks2, claudeStocks3];
+
+    for (let i = 0; i < 3; i++) {
+      if (!validateTrade(claudeStocks[i], players[i], updatedStockPrices)) {
+        claudeStocks[i] = [0, 0, 0, 0, 0];
+        setIsLoading(false);
+      }
+
+      trade(claudeStocks[i], i + 1);
+
+      setLogs(updatedLogs);
+
+      event();
+
+      setStockPrices(updatedStockPrices);
     }
-    trade(claudeStocks, 1);
-
-    setLogs(updatedLogs);
-
-    event();
-
-    setStockPrices(updatedStockPrices);
 
     if (year === 4 && period === 4) {
       setIsFinished(true);
@@ -239,7 +244,8 @@ const StockSelector = ({
         stock = isBuy ? stock : -stock;
 
         let dealingPrice = 0;
-        dealingPrice += priceArray[stockPrices[i] + (isBuy ? 0 : 1)] * stock;
+        dealingPrice +=
+          priceArray[updatedStockPrices[i] + (isBuy ? 0 : 1)] * stock;
 
         updatedPlayer.money += (isBuy ? -1 : 1) * dealingPrice;
         updatedPlayer.stocks[i] += isBuy ? stock : -stock;

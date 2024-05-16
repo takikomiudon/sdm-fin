@@ -34,9 +34,9 @@ function App() {
     arrayShuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
   );
   const [player1, setPlayer1] = useState(initialPlayerState("あなた"));
-  const [player2, setPlayer2] = useState(initialPlayerState("Claude"));
-  const [player3, setPlayer3] = useState(initialPlayerState("CPU1"));
-  const [player4, setPlayer4] = useState(initialPlayerState("CPU2"));
+  const [player2, setPlayer2] = useState(initialPlayerState("Claude1"));
+  const [player3, setPlayer3] = useState(initialPlayerState("Claude2"));
+  const [player4, setPlayer4] = useState(initialPlayerState("Claude3"));
 
   const [stockPrices, setStockPrices] = useState([15, 15, 15, 15, 15]);
 
