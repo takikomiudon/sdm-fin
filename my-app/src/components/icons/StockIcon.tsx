@@ -28,6 +28,14 @@ const StockIcon = ({ id }: { id: number }) => {
     "配当金が高い",
     "今後の成長が見込まれる",
   ];
+  const dividends = [
+    [20, 20, 20, 0], // 物質・材料開発機構
+    [0, 20, 0, 0], // SIBC
+    [10, 20, 10, 0], // システム物流
+    [30, 30, 20, 0], // シミュレーションLab
+    [0, 0, 0, 0], // 株式会社松井研究所
+  ];
+
   const icons = [
     <ScienceIcon />,
     <AccountBalanceWalletIcon />,
@@ -57,6 +65,21 @@ const StockIcon = ({ id }: { id: number }) => {
         <React.Fragment>
           <Typography color="inherit">{names[id]}</Typography>
           <em>{descriptions[id]}</em>
+          <table>
+            <tr>配当金</tr>
+            <tr>
+              <td>1年目</td>
+              <td>2年目</td>
+              <td>3年目</td>
+              <td>4年目</td>
+            </tr>
+            <tr>
+              <td>{dividends[id][0]}</td>
+              <td>{dividends[id][1]}</td>
+              <td>{dividends[id][2]}</td>
+              <td>{dividends[id][3]}</td>
+            </tr>
+          </table>
         </React.Fragment>
       }
     >
