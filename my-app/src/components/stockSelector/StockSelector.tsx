@@ -118,9 +118,9 @@ const StockSelector = ({
     initialTrade();
 
     let [claudeStocks1, claudeStocks2, claudeStocks3] = await Promise.all([
-      claude(stockPrices, player2, events[eventNum].effect, year, period),
-      claude(stockPrices, player3, events[eventNum].effect, year, period),
-      claude(stockPrices, player4, events[eventNum].effect, year, period),
+      claude(stockPrices, player2, events[eventNum], year, period),
+      claude(stockPrices, player3, events[eventNum], year, period),
+      claude(stockPrices, player4, events[eventNum], year, period),
     ]);
 
     const players = [player2, player3, player4];
@@ -313,31 +313,31 @@ const StockSelector = ({
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={0}
-          icon={<StockIcon id={0} />}
+          icon={<StockIcon id={0} size="60px" />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={1}
-          icon={<StockIcon id={1} />}
+          icon={<StockIcon id={1} size="60px" />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={2}
-          icon={<StockIcon id={2} />}
+          icon={<StockIcon id={2} size="60px" />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={3}
-          icon={<StockIcon id={3} />}
+          icon={<StockIcon id={3} size="60px" />}
         />
         <StockSelectButton
           stocks={playerStocks}
           setStocks={setPlayerStocks}
           stockId={4}
-          icon={<StockIcon id={4} />}
+          icon={<StockIcon id={4} size="60px" />}
         />
       </div>
       <div className="message">{message}</div>
