@@ -2,6 +2,9 @@ import React from "react";
 import PlayerInfo from "./PlayerInfo";
 import { Player } from "../../types/player";
 import StockIcon from "../icons/StockIcon";
+import chatgptIcon from "./img/chatgpt-icon.png";
+import claudeIcon from "./img/claude-ai-icon.png";
+import geminiIcon from "./img/google-gemini-icon.png";
 
 const PlayerInfoList = ({
   player1,
