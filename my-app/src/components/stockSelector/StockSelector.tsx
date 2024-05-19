@@ -71,6 +71,7 @@ const StockSelector = ({
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   let updatedLogs = [...logs];
   let updatedStockPrices = [...stockPrices];
   let updatedPlayer1 = JSON.parse(JSON.stringify(player1));
@@ -123,6 +124,8 @@ const StockSelector = ({
       claude(stockPrices, player4, events[eventNum], year, period),
     ]);
 
+    setIsFetching(false);
+
     const players = [player2, player3, player4];
     const claudeStocks = [claudeStocks1, claudeStocks2, claudeStocks3];
 
@@ -133,13 +136,13 @@ const StockSelector = ({
       }
 
       trade(claudeStocks[i], i + 1);
-
-      setLogs(updatedLogs);
-
-      event();
-
-      setStockPrices(updatedStockPrices);
     }
+
+    setLogs(updatedLogs);
+
+    event();
+
+    setStockPrices(updatedStockPrices);
 
     if (year === 4 && period === 4) {
       setIsFinished(true);
@@ -162,6 +165,7 @@ const StockSelector = ({
     setEventNum(eventNum + 1);
 
     setIsLoading(false);
+    setIsFetching(true);
   };
 
   const validateTrade = (
@@ -355,7 +359,7 @@ const StockSelector = ({
         onClick={handleOpen}
         className="button"
       >
-        {isLoading ? <CircularProgress color="inherit" size={24} /> : "決定"}
+        {isLoading && isFetching ? <CircularProgress color="inherit" size={24} /> : "決定"}
       </Button>
       <Dialog
         open={open}
