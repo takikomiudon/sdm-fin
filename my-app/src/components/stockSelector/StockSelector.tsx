@@ -144,7 +144,7 @@ const StockSelector = ({
 
     setStockPrices(updatedStockPrices);
 
-    if (year === 4 && period === 4) {
+    if (year === 2 && period === 4) {
       setIsFinished(true);
     } else if (period === 4) {
       setYear(year + 1);
