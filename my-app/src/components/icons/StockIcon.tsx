@@ -90,14 +90,14 @@ const StockIcon = ({ id, size = "40px" }: { id: number; size?: string }) => {
             <tr>
               <td>1年目</td>
               <td>2年目</td>
-              <td>3年目</td>
-              <td>4年目</td>
+              {/* <td>3年目</td>
+              <td>4年目</td> */}
             </tr>
             <tr>
               <td>{dividends[id][0]}</td>
               <td>{dividends[id][1]}</td>
-              <td>{dividends[id][2]}</td>
-              <td>{dividends[id][3]}</td>
+              {/* <td>{dividends[id][2]}</td>
+              <td>{dividends[id][3]}</td> */}
             </tr>
           </table>
         </React.Fragment>
